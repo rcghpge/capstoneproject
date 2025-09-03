@@ -1,3 +1,6 @@
 # Datasets
 *.zip
 *.csv
+
+# Jupyter Notebook configs
+.ipynb_checkpoints/
