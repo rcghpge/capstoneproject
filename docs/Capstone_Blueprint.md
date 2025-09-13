@@ -1,10 +1,10 @@
-# Capstone Technical Documentation (Core Blueprint Dgraft)
+# Capstone Technical Documentation
 
 ## Overview
 
-This document provides a preliminary structured blueprint and framework for integrating **SQL/SQLite**, **Python ML pipelines**, and **Tableau dashboards** into a cohesive, 
+This document provides a preliminary structured blueprint and framework in Markdown format for integrating **SQL/SQLite**, **Python ML pipelines**, and **Tableau dashboards** into a cohesive, 
 reproducible body of work. The goal is to demonstrate an end-to-end workflow from raw data ingestion to final model deployment and visualization, ensuring reproducibility, stability, and 
-interpretability in the high-dimensional setting (p ≫ n). It serves as a baseline for formulating this body of work.
+interpretability in the high-dimensional setting (p ≫ n).
 
 ---
 
@@ -99,3 +99,4 @@ For reliable finalization, the following traditional ML frameworks are recommend
 This pipeline ensures the capstone project is not only an academic exercise but a **production-grade, reproducible workflow** that spans data warehousing, machine learning, and business intelligence visualization.
 
 ---
+
