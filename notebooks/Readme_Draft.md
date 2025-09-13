@@ -99,14 +99,14 @@ This document summarizes state-of-the-art traditional ML methodologies for prepr
 - EN (Elastic Net) → Combines L1 + L2 penalties. Balances sparsity (L1) and stability (L2). Often the best default for p≫n problems.
 
 ### Feature engineering general summary:
-- Imputation tools: MissForest, miceforest, SoftImpute, KNN Imputer.
-- Feature selection tools: FDR, MI, mRMR, Boruta, SIS.
-- Dimension reduction tools: SparsePCA, Truncated SVD, PLS/PLS-DA.
-- Regularization tools: Ridge, Lasso (L1), Elastic Net (EN).
-- Imputation tools: MissForest, miceforest, SoftImpute, KNN Imputer.
-- Feature selection tools: FDR, MI, mRMR, Boruta, SIS.
-- Dimension reduction tools: SparsePCA, Truncated SVD, PLS/PLS-DA.
-- Regularization tools: Ridge, Lasso (L1), Elastic Net (EN).
+- **Imputation tools:** MissForest, miceforest, SoftImpute, KNN Imputer.
+- **Feature selection tools:** FDR, MI, mRMR, Boruta, SIS.
+- **Dimension reduction tools:** SparsePCA, Truncated SVD, PLS/PLS-DA.
+- **Regularization tools:** Ridge, Lasso (L1), Elastic Net (EN).
+- **Imputation tools:** MissForest, miceforest, SoftImpute, KNN Imputer.
+- **Feature selection tools:** FDR, MI, mRMR, Boruta, SIS.
+- **Dimension reduction tools:** SparsePCA, Truncated SVD, PLS/PLS-DA.
+- **Regularization tools:** Ridge, Lasso (L1), Elastic Net (EN).
 
 ---
 
