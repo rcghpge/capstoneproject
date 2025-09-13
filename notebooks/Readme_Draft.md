@@ -43,7 +43,7 @@ This document summarizes state-of-the-art traditional ML methodologies for prepr
 - Tree ensembles (RF/GBDT) with aggressive early-stopping and permutation importance for selection—not just raw gain.
 - Calibrate (Platt/isotonic) after selection if probabilities matter.
 
-### Robust training protocol]
+### Robust training protocol
 - Nested CV (outer for performance, inner for tuning/selection/imputation).
 - All preprocessing inside the pipeline (impute → scale → select → reduce → model).
 - Stability audits: bootstrap/cross-fit to get selection frequencies; report them.
@@ -51,10 +51,10 @@ This document summarizes state-of-the-art traditional ML methodologies for prepr
 - Leakage checks: encoders, imputers, scalers, and selectors must be fit on train folds only.
 
 ### Practical Python building blocks
-- Imputation: sklearn.IterativeImputer, miceforest, missingpy.MissForest, fancyimpute.SoftImpute
-- Selection: sklearn.feature_selection (FDR, MI), BorutaPy, stability-selection (e.g., skglm / scikit-learn-contrib), RFECV
-- Reduction: SparsePCA, TruncatedSVD, PLSRegression
-- Encoding: category_encoders (Target/WOE/LeaveOneOut with CV)
+- Imputation: `sklearn.IterativeImputer`, miceforest, missingpy.MissForest, fancyimpute.SoftImpute
+- Selection: `sklearn.feature_selection` (FDR, MI), BorutaPy, stability-selection (e.g., `skglm`/`scikit-learn-contrib`), `RFECV`
+- Reduction: `SparsePCA`, `TruncatedSVD`, `PLSRegression`
+- Encoding: `category_encoders` (Target/WOE/LeaveOneOut with CV)
 
 ### Example template p≫n pipeline
 - Column typing & leakage plan (what’s known at train time).
