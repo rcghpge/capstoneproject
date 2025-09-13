@@ -1,6 +1,40 @@
-# Datasets
+# Databases/Datasets
 *.zip
 *.csv
+*.db
+*.sqlite
+*.sqlite3
+
+# Distribution/packaging
+*.egg-info/
+dist/
+build/
+
+# Byte-compiled/cache
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*.pyo
+*.pyd
+
+# SQLite journaling files
+*-journal
+*-shm
+*-wal
+*.sqlite-journal
+*.sqlite-shm
+*.sqlite-wal
 
 # Jupyter Notebook configs
 .ipynb_checkpoints/
+
+# Virtual environments
+.capstone/
+capstone/
+venv/
+.env/
+.venv/
+env/
+ENV/
+
+
