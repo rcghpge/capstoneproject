@@ -1,4 +1,4 @@
-# Capstone Technical Documentation (Core Blueprint Dgraft)
+# Capstone Technical Documentation (Core Blueprint Draft)
 
 ## Overview
 
