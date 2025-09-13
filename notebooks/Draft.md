@@ -1,7 +1,7 @@
 # notebooks
 
-This is a secondary README draft, blueprinting data science methodologies and filtered via artificial intellgigence to gauge its pragmatic use case
-in the field of data science and this body of work.
+This is a secondary README draft, blueprinting data science methodologies and filtered via artificial intelligence to gauge its pragmatic use case
+in the field of data science in this body of work.
 
 ---
 
