@@ -1,7 +1,7 @@
 # notebooks
 
 ## Methodologies for Capstone
-This is a list of data preprocessing methodologies available for dataset preprocessing respective to the dataset utilized in this body of work.
+This is a list of preprocessing methodologies available for data preprocessing respective to the dataset utilized in this body of work.
 
 ---
 
