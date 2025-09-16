@@ -8,8 +8,7 @@ and scope capstone proposal. Most docs may end up not being submitted and can be
 ### Infant & Under-Five Mortality Risk Monitoring
 
 Title Page
-  - Project Title: A Modular, Reproducible Machine Learning Framework for Infant and Under-Five Mortality Risk 
-  Prediction
+  - Project Title: A Machine Learning Framework for Infant Mortality Risk Prediction
 
   - Student Name(s): [Your names here]
 
