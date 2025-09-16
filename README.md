@@ -20,7 +20,7 @@ python -m venv capstone
 # Activate venv
 source capstone/bin/activate
 
-# Install dependencies and Jupyter Notebooks or Jupyter Lab (if needed)
+# Install dependencies and Jupyter Notebooks or Jupyter Lab
 pip install jupyterlab jupyter notebook # add needed dependencies pandas numpy matplotlib etc
 
 # Install SQL dependencies (Optional)
