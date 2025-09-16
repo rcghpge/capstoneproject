@@ -26,7 +26,7 @@ pip install jupyterlab jupyter notebook # can install either/both
 # Install SQL dependencies (Optional)
 pip install ipython-sql sqlalchemy sqlite3
 
-# Launch Jupyter Notebook/Jupyter Lab program
+# Launch Jupyter Notebook/Jupyter Lab
 jupyter lab # or jupyter notebook
 ```
 
