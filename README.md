@@ -20,8 +20,8 @@ python -m venv capstone
 # Activate venv
 source capstone/bin/activate
 
-# Install Jupyter Notebooks or Jupyter Lab (if needed)
-pip install jupyterlab jupyter notebook # can install either/both
+# Install dependencies and Jupyter Notebooks or Jupyter Lab (if needed)
+pip install jupyterlab jupyter notebook # add needed dependencies pandas numpy matplotlib etc
 
 # Install SQL dependencies (Optional)
 pip install ipython-sql sqlalchemy sqlite3
