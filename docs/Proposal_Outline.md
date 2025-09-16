@@ -1,6 +1,6 @@
 # proposal
 
-Proposal outline. This is an artifically generated proposal outline to have some form of documentation to track
+Proposal outline. This is an artifically generated proposal outline that has been proofread and manually formatted to have some form of documentation to track
 and scope capstone proposal. Most docs may end up not being submitted and can be archived as project artifacts.
 
 ---
