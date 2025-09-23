@@ -27,7 +27,7 @@ and environmental factors) are rarely unified into a modular feature store for r
 - Model drift and early warning gaps: Current approaches are mostly retrospective; few incorporate real-time drift 
 detection and adaptive recalibration, which are essential for detecting policy impacts or emerging risks.
 
-- Decision-support (reserach gaps): Policymakers at both state and regional levels need modular dashboards that can 
+- Decision-support (research gaps): Policymakers at both state and regional levels need modular dashboards that can 
 pivot between scales (district ↔ state ↔ region), but most existing tools are static or non-reproducible.
 
 This project looks to address these research gaps by building a modular, state- and district-level risk scoring system 
