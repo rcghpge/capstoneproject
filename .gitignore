@@ -28,6 +28,10 @@ __pycache__/
 # Jupyter Notebook configs
 .ipynb_checkpoints/
 
+# JupyterLab workspace configs
+*.jupyterlab-workspace
+.jupyter/lab/workspaces/
+
 # Virtual environments
 .capstone/
 capstone/
