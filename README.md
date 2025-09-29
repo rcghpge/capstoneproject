@@ -16,7 +16,7 @@ environment if needed before capstone project development on the Jupyter platfor
 ```bash
 # Clone repository
 git clone https://github.com/rcghpge/seniorcapstoneproject.git
-cd seniorcapstone
+cd seniorcapstoneproject
 
 # Generate Pip venv if needed
 python -m venv venv
