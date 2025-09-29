@@ -14,11 +14,15 @@ Jupyter Notebooks or Jupyter Lab
 Install Python or SQL dependencies needed for capstone project dev inside of the Python virtual
 environment if needed before capstone project development on the Jupyter platform.
 ```bash
+# Clone repository
+git clone https://github.com/rcghpge/seniorcapstoneproject.git
+cd seniorcapstone
+
 # Generate Pip venv if needed
-python -m venv capstone
+python -m venv venv
 
 # Activate venv
-source capstone/bin/activate
+source venv/bin/activate
 
 # Install dependencies and Jupyter Notebooks or Jupyter Lab
 pip install jupyterlab jupyter notebook # add needed dependencies pandas numpy matplotlib etc
