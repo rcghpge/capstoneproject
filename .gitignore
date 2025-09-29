@@ -1,4 +1,5 @@
 # Databases/Datasets
+data/
 *.zip
 *.csv
 *.db
