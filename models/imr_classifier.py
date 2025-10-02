@@ -9,7 +9,7 @@ python imr_classifier.py \
   --data path/to/data.csv \
   --target "YY_Infant_Mortality_Rate_Imr_Total_Person" \
   --id-cols State_Name State_District_Name \
-  --quantile 0.50 \ # or --threshold 12 (% vs numeric IMR metric for High (1) or Low (0))
+  --quantile 0.50 \ # or --threshold 12 (% vs numeric IMR metric for High (1) or Low (0) IMR)
   --outdir ./imr_classification_model
 
 Outputs:
