@@ -1,4 +1,4 @@
-# seniorcapstoneproject
+# capstoneproject
 
 Senior Capstone Project | Division of Data Science | The University of Texas at Arlington
 
