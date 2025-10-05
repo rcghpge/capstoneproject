@@ -1,1 +1,1 @@
-*.py linguist-language=python
+scripts/*.py linguist-language=python
