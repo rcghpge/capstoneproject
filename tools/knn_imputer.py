@@ -1,4 +1,49 @@
 #!/usr/bin/env python3
+"""
+KNN Imputer for ASH State and District datasets
+
+Example Usage
+From CSV:
+```bash
+python impute_knn_state_and_district.py csv \
+  --state_csv data/Statewise.csv \
+  --district_csv data/Districtwise.csv \
+  --out_state_csv out/Statewise_knn.csv \
+  --out_district_csv out/Districtwise_knn.csv
+```
+
+From SQLite (.db):
+```bash
+python impute_knn_state_and_district.py sqlite \
+  --db_path data/health.db \
+  --state_table Statewise \
+  --district_table Districtwise \
+  --out_state_csv out/Statewise_knn.csv \
+  --out_district_csv out/Districtwise_knn.csv
+```
+
+Toggle Flags:
+Disable per-state groups (faster baseline)
+```python-repl
+... --no_group_by_state
+```
+
+Don't add `_was_missing` flags
+```python-repl
+... --no_flags
+```
+
+Leave categoricals untouched
+```python-repl
+... --no_cat_impute
+```
+
+Add/adjust targets to exclude from distances
+```bash
+... --target YY_Infant_Mortality_Rate_Imr_Total_Person --target Some_Other_Target
+```
+"""
+
 import argparse
 import sqlite3
 from pathlib import Path
@@ -8,8 +53,9 @@ import pandas as pd
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.impute import KNNImputer, SimpleImputer
 
-# -------------------- Preset Configs --------------------
-DEFAULT_ID_COLS = ["State_Name", "District_Name", "State_Code", "District_Code"]
+
+# -------------------- Default Preset --------------------
+DEFAULT_ID_COLS = ["State_Name", "State_District_Name", "State_Code", "District_Code"]
 DEFAULT_TARGETS = ["YY_Infant_Mortality_Rate_Imr_Total_Person"]  # add more if needed
 N_NEIGHBORS = 5
 WEIGHTS = "distance"
@@ -255,58 +301,10 @@ def main():
     write_csv(imputed_state, args.out_state_csv)
     write_csv(imputed_dist, args.out_district_csv)
 
-    print(f"[OK] Wrote:\n  {args.out_state_csv}\n  {args.out_district_csv}")
+    print(f"[OK] KNN Imputer Complete! Wrote:\n  {args.out_state_csv}\n  {args.out_district_csv}")
 
 
 if __name__ == "__main__":
     main()
-
-"""
-Example Usage
-From CSV:
-```bash
-python impute_knn_state_and_district.py csv \
-  --state_csv data/Statewise.csv \
-  --district_csv data/Districtwise.csv \
-  --out_state_csv out/Statewise_knn.csv \
-  --out_district_csv out/Districtwise_knn.csv
-```
-
-From SQLite (.db):
-```bash
-python impute_knn_state_and_district.py sqlite \
-  --db_path data/health.db \
-  --state_table Statewise \
-  --district_table Districtwise \
-  --out_state_csv out/Statewise_knn.csv \
-  --out_district_csv out/Districtwise_knn.csv
-```
-
-Toggle Flags:
-Disable per-state groups (faster baseline)
-```python-repl
-... --no_group_by_state
-```
-
-Don't add `_was_missing` flags
-```python-repl
-... --no_flags
-```
-
-Leave categoricals untouched
-```python-repl
-... --no_cat_impute
-```
-
-Add/adjust targets to exclude from distances
-```bash
-... --target YY_Infant_Mortality_Rate_Imr_Total_Person --target Some_Other_Target
-```
-"""
-
-
-
-
-
 
 

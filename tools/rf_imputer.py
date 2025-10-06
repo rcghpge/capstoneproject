@@ -321,7 +321,6 @@ def impute_dataframe(
 
 
 # -------------------- I/O helpers & CLI --------------------
-
 def read_from_csv(path: str) -> pd.DataFrame:
     return pd.read_csv(path)
 
@@ -361,7 +360,7 @@ def main():
     parser.add_argument("--no_flags", action="store_true", help="Disable _was_missing flags")
     parser.add_argument("--no_cat_impute", action="store_true", help="Do not impute categoricals")
 
-    # RF / MissForest knobs (optional)
+    # RF/MissForest flags (optional)
     parser.add_argument("--rf_estimators", type=int, default=DEFAULT_RF["n_estimators"])
     parser.add_argument("--rf_min_leaf", type=int, default=DEFAULT_RF["min_samples_leaf"])
     parser.add_argument("--rf_max_features", type=str, default=str(DEFAULT_RF["max_features"]))
