@@ -1,0 +1,47 @@
+IMR Regression Report
+================================================================================
+Timestamp: 2025-10-09T06:57:02.306519Z
+Python: 3.12.3 | Platform: Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39
+
+Run Configuration
+--------------------------------------------------------------------------------
+Data: out/Districtwise_mice_fast.csv
+Target: YY_Infant_Mortality_Rate_Imr_Total_Person
+Excluded ID cols: State_Name, State_District_Name
+Test size: 0.2 | Random state: 42
+
+Dataset Shapes
+--------------------------------------------------------------------------------
+X shape: (284, 1283) | y length: 284
+Train X: (227, 1283) | Test X: (57, 1283)
+
+Preprocessing Summary
+--------------------------------------------------------------------------------
+Numeric features: 1283
+Categorical features: 0
+All-missing numeric columns: ['LL_Total_Fertility_Rate_Rural', 'LL_Total_Fertility_Rate_Urban']
+All-missing categorical columns: []
+
+Regressor
+--------------------------------------------------------------------------------
+HistGradientBoostingRegressor(random_state=42)
+
+Test Metrics
+--------------------------------------------------------------------------------
+RMSE: 2.589392
+MAE: 1.501247
+R^2: 0.973670
+Explained Variance: 0.973684
+
+Top 10 Features by Permutation Importance
+--------------------------------------------------------------------------------
+ 1. num__ZZ_Infant_Mortality_Rate_Rural_Upper_Limit | mean=0.282069 | std=0.040471
+ 2. num__ZZ_Infant_Mortality_Rate_Rural_Lower_Limit | mean=0.161543 | std=0.021676
+ 3. num__YY_Infant_Mortality_Rate_Imr_Rural_Female | mean=0.032376 | std=0.002280
+ 4. num__YY_Infant_Mortality_Rate_Imr_Rural_Person | mean=0.008279 | std=0.001629
+ 5. num__ZZ_Infant_Mortality_Rate_Urban_Lower_Limit | mean=0.003322 | std=0.000820
+ 6. num__YY_Under_Five_Mortality_Rate_U5MR_Rural_Male | mean=0.002766 | std=0.001241
+ 7. num__YY_Infant_Mortality_Rate_Imr_Rural_Male | mean=0.002548 | std=0.000614
+ 8. num__YY_Neo_Natal_Mortality_Rate_Urban | mean=0.001856 | std=0.000996
+ 9. num__ZZ_Infant_Mortality_Rate_Urban_Upper_Limit | mean=0.001767 | std=0.000281
+10. num__YY_Post_Neo_Natal_Mortality_Rate_Total | mean=0.001310 | std=0.000875

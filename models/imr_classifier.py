@@ -125,7 +125,7 @@ def save_pr_plot(y_true, y_score, outpath: Path):
 
 def save_confusion_matrix_plot(cm: np.ndarray, outpath: Path, class_labels=("Low", "High")):
     plt.figure()
-    plt.imshow(cm, interpolation="nearest")
+    plt.imshow(cm, interpolation="nearest", cmap="Blues")
     plt.title("Confusion Matrix")
     plt.colorbar()
     tick_marks = np.arange(len(class_labels))
