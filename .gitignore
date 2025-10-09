@@ -1,6 +1,5 @@
 # Databases/Datasets
 data/
-out/
 *.zip
 *.csv
 *.db
