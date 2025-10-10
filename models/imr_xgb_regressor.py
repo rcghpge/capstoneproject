@@ -31,6 +31,7 @@ Outputs (in --outdir):
 from __future__ import annotations
 import argparse, json
 import inspect
+import math
 from pathlib import Path
 from datetime import datetime
 import platform, sys
@@ -188,6 +189,56 @@ def save_residuals_hist_plot(y_true, y_pred, outpath: Path):
     plt.title("Residuals Histogram")
     plt.tight_layout()
     plt.savefig(outpath)
+    plt.close()
+
+def _adjusted_r2(r2: float, n: int, p: int) -> float:
+    denom = max(n - p - 1, 1)
+    return 1.0 - (1.0 - r2) * (n - 1) / denom
+
+def _effective_num_features_from_pre(pre, X_sample) -> int:
+    try:
+        return int(pre.transform(X_sample[:5]).shape[1])
+    except Exception:
+        try:
+            return int(len(pre.get_feature_names_out()))
+        except Exception:
+            return int(X_sample.shape[1])
+
+def save_baseline_scatter_plot(
+    y_true, y_pred, title: str, outpath: Path,
+    target_label: str = "Infant Mortality Rate",
+    n_features: int | None = None
+):
+    order = np.argsort(np.asarray(y_true))
+    y_true_sorted = np.asarray(y_true)[order]
+    y_pred_sorted = np.asarray(y_pred)[order]
+
+    rmse = float(np.sqrt(mean_squared_error(y_true_sorted, y_pred_sorted)))
+    r2 = float(r2_score(y_true_sorted, y_pred_sorted))
+    n = len(y_true_sorted)
+    p = int(n_features) if n_features is not None else 1
+    adj_r2 = float(_adjusted_r2(r2, n=n, p=p))
+
+    plt.figure(figsize=(8, 4.2))
+    x = np.arange(n)
+    plt.plot(x, y_pred_sorted, linewidth=1.5, label="Predicted Value")   # blue line
+    plt.scatter(x, y_true_sorted, s=22, color="k", label="True Value")   # black dots
+
+    plt.title(title)
+    plt.xlabel("Sample")
+    plt.ylabel(target_label)
+    plt.legend(loc="upper left", frameon=True)
+
+    metrics_text = f"Metrics:\nR^2: {r2:.2f}\nAdjusted R^2: {adj_r2:.2f}\nRMSE: {rmse:.2f}"
+    plt.text(
+        1.02, 0.98, metrics_text,
+        transform=plt.gca().transAxes,
+        va="top", ha="left",
+        bbox=dict(boxstyle="round", facecolor="white", alpha=0.8, edgecolor="0.7")
+    )
+
+    plt.tight_layout()
+    plt.savefig(outpath, dpi=130)
     plt.close()
 
 
@@ -543,6 +594,11 @@ def main():
     with step("Predict"):
         y_pred = pipe.predict(X_test)
 
+    y_pred = pipe.predict(X_test)
+    y_pred_train = pipe.predict(X_train)
+    pre_fitted = pipe.named_steps["pre"]
+    n_features_eff = _effective_num_features_from_pre(pre_fitted, X_train)
+
     rmse = float(np.sqrt(mean_squared_error(y_test, y_pred)))
     mae = float(mean_absolute_error(y_test, y_pred))
     r2 = float(r2_score(y_test, y_pred))
@@ -576,6 +632,21 @@ def main():
         "fit_supports_callbacks": supports_callbacks if use_early_stop else None,
         "fit_supports_es_rounds": supports_es_rounds if use_early_stop else None,
     }
+
+    save_baseline_scatter_plot(
+        y_true=y_train, y_pred=y_pred_train,
+        title="Baseline Training Scatter Plot",
+        outpath=outdir / "baseline_training_scatter.png",
+        target_label="Infant Mortality Rate",
+        n_features=n_features_eff
+    )
+    save_baseline_scatter_plot(
+        y_true=y_test, y_pred=y_pred,
+        title="Baseline Testing Scatter Plot",
+        outpath=outdir / "baseline_testing_scatter.png",
+        target_label="Infant Mortality Rate",
+        n_features=n_features_eff
+    )
 
     with step("Permutation importance"):
         top10_df = None

@@ -28,5 +28,56 @@
   "eval_size": 0.1,
   "fit_supports_callbacks": false,
   "fit_supports_es_rounds": false,
-  "permutation_importance_error": "A task has failed to un-serialize. Please ensure that the arguments of the function are all picklable."
+  "permutation_importance_top10": [
+    {
+      "feature": "num__ZZ_Infant_Mortality_Rate_Rural_Upper_Limit",
+      "importance_mean": 0.5233125939623959,
+      "importance_std": 0.057804887993860764
+    },
+    {
+      "feature": "num__ZZ_Infant_Mortality_Rate_Rural_Lower_Limit",
+      "importance_mean": 0.08085379658928622,
+      "importance_std": 0.011669058602370828
+    },
+    {
+      "feature": "num__YY_Infant_Mortality_Rate_Imr_Rural_Female",
+      "importance_mean": 0.025661329033754954,
+      "importance_std": 0.0034282039529684315
+    },
+    {
+      "feature": "num__YY_Infant_Mortality_Rate_Imr_Rural_Male",
+      "importance_mean": 0.015753655529842737,
+      "importance_std": 0.0013871034200946515
+    },
+    {
+      "feature": "num__YY_Infant_Mortality_Rate_Imr_Rural_Person",
+      "importance_mean": 0.00877654090218687,
+      "importance_std": 0.0011086036315164582
+    },
+    {
+      "feature": "num__ZZ_Infant_Mortality_Rate_Urban_Lower_Limit",
+      "importance_mean": 0.00807578527034769,
+      "importance_std": 0.0005521545230576301
+    },
+    {
+      "feature": "num__YY_Post_Neo_Natal_Mortality_Rate_Total",
+      "importance_mean": 0.0014320809235414788,
+      "importance_std": 0.00017322492364966352
+    },
+    {
+      "feature": "num__YY_Neo_Natal_Mortality_Rate_Urban",
+      "importance_mean": 0.0006547256929142709,
+      "importance_std": 0.00011180522007113508
+    },
+    {
+      "feature": "num__UU_Children_Suffering_From_Diarrhoea_Rural",
+      "importance_mean": 0.000551303169859918,
+      "importance_std": 0.00044549108171526103
+    },
+    {
+      "feature": "num__NN_Current_Usage_Withdrawal_Urban",
+      "importance_mean": 0.0003088738254290346,
+      "importance_std": 0.0001371426669242488
+    }
+  ]
 }
