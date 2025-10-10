@@ -1,0 +1,44 @@
+IMR XGBoost Regression Report
+================================================================================
+Timestamp: 2025-10-10T04:46:45.169937Z
+Python: 3.12.3 | Platform: Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39
+
+Run Configuration
+--------------------------------------------------------------------------------
+Data: out/Districtwise_mice_fast.csv
+Target: YY_Infant_Mortality_Rate_Imr_Total_Person
+Excluded ID cols: State_Name, State_District_Name
+Test size: 0.2 | Eval size: 0.1 | Random state: 42
+
+Dataset Shapes
+--------------------------------------------------------------------------------
+X shape: (284, 1283) | y length: 284
+Train X: (227, 1283) | Test X: (57, 1283)
+
+Preprocessing Summary
+--------------------------------------------------------------------------------
+Numeric features: 1283
+Categorical features: 0
+All-missing numeric columns: ['LL_Total_Fertility_Rate_Rural', 'LL_Total_Fertility_Rate_Urban']
+All-missing categorical columns: []
+
+Regressor
+--------------------------------------------------------------------------------
+XGBRegressor(base_score=None, booster=None, callbacks=None,
+             colsample_bylevel=None, colsample_bynode=None,
+             colsample_bytree=0.8, device='cuda', early_stopping_rounds=None,
+             enable_categorical=False, eval_metric='rmse', feature_types=None,
+             feature_weights=None, gamma=0.0, grow_policy=None,
+             importance_type=None, interaction_constraints=None,
+             learning_rate=0.03, max_bin=256, max_cat_threshold=None,
+             max_cat_to_onehot=None, max_delta_step=None, max_depth=6,
+             max_leaves=None, min_child_weight=1.5, missing=nan,
+             monotone_constraints=None, multi_strategy=None, n_estimators=2000,
+             n_jobs=-1, num_parallel_tree=None, ...)
+
+Test Metrics
+--------------------------------------------------------------------------------
+RMSE: 1.812935
+MAE: 0.952536
+R^2: 0.987093
+Explained Variance: 0.987189

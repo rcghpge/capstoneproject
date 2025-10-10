@@ -1,0 +1,21 @@
+Classification-style Report (binarized from regression outputs)
+================================================================================
+Threshold: 30.0  (>= threshold → class=High)
+
+Confusion Matrix [rows: true, cols: pred] (Low, High)
+--------------------------------------------------------------------------------
+[[ 2  0]
+ [ 2 53]]
+
+Accuracy: 0.964912
+
+Detailed Classification Report
+--------------------------------------------------------------------------------
+              precision    recall  f1-score   support
+
+         Low     0.5000    1.0000    0.6667         2
+        High     1.0000    0.9636    0.9815        55
+
+    accuracy                         0.9649        57
+   macro avg     0.7500    0.9818    0.8241        57
+weighted avg     0.9825    0.9649    0.9704        57

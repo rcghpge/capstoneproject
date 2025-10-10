@@ -1,0 +1,32 @@
+{
+  "rmse": 1.812934534055636,
+  "mae": 0.9525363078870271,
+  "r2": 0.9870929287810943,
+  "explained_variance": 0.9871893249619412,
+  "num_features_numeric": 1283,
+  "num_features_categorical": 0,
+  "num_all_missing_columns": [
+    "LL_Total_Fertility_Rate_Rural",
+    "LL_Total_Fertility_Rate_Urban"
+  ],
+  "cat_all_missing_columns": [],
+  "best_iteration": null,
+  "xgboost_version": "3.0.5",
+  "n_estimators": 2000,
+  "learning_rate": 0.03,
+  "max_depth": 6,
+  "subsample": 0.8,
+  "colsample_bytree": 0.8,
+  "min_child_weight": 1.5,
+  "reg_alpha": 0.0,
+  "reg_lambda": 1.0,
+  "gamma": 0.0,
+  "max_bin": 256,
+  "device": "cuda",
+  "tree_method": "hist",
+  "early_stopping_rounds": 100,
+  "eval_size": 0.1,
+  "fit_supports_callbacks": false,
+  "fit_supports_es_rounds": false,
+  "permutation_importance_error": "A task has failed to un-serialize. Please ensure that the arguments of the function are all picklable."
+}
