@@ -1,9 +1,9 @@
 {
-  "rmse": 1.812934534055636,
-  "mae": 0.9525363078870271,
-  "r2": 0.9870929287810943,
-  "explained_variance": 0.9871893249619412,
-  "num_features_numeric": 1283,
+  "rmse": 1.8892807663826172,
+  "mae": 0.929551875979401,
+  "r2": 0.9855315254754683,
+  "explained_variance": 0.9861105941946005,
+  "num_features_numeric": 641,
   "num_features_categorical": 0,
   "num_all_missing_columns": [
     "LL_Total_Fertility_Rate_Rural",
@@ -12,72 +12,19 @@
   "cat_all_missing_columns": [],
   "best_iteration": null,
   "xgboost_version": "3.0.5",
-  "n_estimators": 2000,
-  "learning_rate": 0.03,
+  "n_estimators": 2250,
+  "learning_rate": 0.015,
   "max_depth": 6,
   "subsample": 0.8,
   "colsample_bytree": 0.8,
-  "min_child_weight": 1.5,
-  "reg_alpha": 0.0,
-  "reg_lambda": 1.0,
+  "min_child_weight": 3.0,
+  "reg_alpha": 0.5,
+  "reg_lambda": 5.0,
   "gamma": 0.0,
   "max_bin": 256,
   "device": "cuda",
   "tree_method": "hist",
-  "early_stopping_rounds": 100,
-  "eval_size": 0.1,
-  "fit_supports_callbacks": false,
-  "fit_supports_es_rounds": false,
-  "permutation_importance_top10": [
-    {
-      "feature": "num__ZZ_Infant_Mortality_Rate_Rural_Upper_Limit",
-      "importance_mean": 0.5233125939623959,
-      "importance_std": 0.057804887993860764
-    },
-    {
-      "feature": "num__ZZ_Infant_Mortality_Rate_Rural_Lower_Limit",
-      "importance_mean": 0.08085379658928622,
-      "importance_std": 0.011669058602370828
-    },
-    {
-      "feature": "num__YY_Infant_Mortality_Rate_Imr_Rural_Female",
-      "importance_mean": 0.025661329033754954,
-      "importance_std": 0.0034282039529684315
-    },
-    {
-      "feature": "num__YY_Infant_Mortality_Rate_Imr_Rural_Male",
-      "importance_mean": 0.015753655529842737,
-      "importance_std": 0.0013871034200946515
-    },
-    {
-      "feature": "num__YY_Infant_Mortality_Rate_Imr_Rural_Person",
-      "importance_mean": 0.00877654090218687,
-      "importance_std": 0.0011086036315164582
-    },
-    {
-      "feature": "num__ZZ_Infant_Mortality_Rate_Urban_Lower_Limit",
-      "importance_mean": 0.00807578527034769,
-      "importance_std": 0.0005521545230576301
-    },
-    {
-      "feature": "num__YY_Post_Neo_Natal_Mortality_Rate_Total",
-      "importance_mean": 0.0014320809235414788,
-      "importance_std": 0.00017322492364966352
-    },
-    {
-      "feature": "num__YY_Neo_Natal_Mortality_Rate_Urban",
-      "importance_mean": 0.0006547256929142709,
-      "importance_std": 0.00011180522007113508
-    },
-    {
-      "feature": "num__UU_Children_Suffering_From_Diarrhoea_Rural",
-      "importance_mean": 0.000551303169859918,
-      "importance_std": 0.00044549108171526103
-    },
-    {
-      "feature": "num__NN_Current_Usage_Withdrawal_Urban",
-      "importance_mean": 0.0003088738254290346,
-      "importance_std": 0.0001371426669242488
-    }
-  ]
+  "early_stopping_rounds": 300,
+  "eval_size": 0.15,
+  "permutation_importance_error": "[04:19:06] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: [04:19:06] /workspace/src/common/common.cu:16: /workspace/src/common/device_vector.cuh: 290: cudaErrorMemoryAllocation: out of memory\nStack trace:\n  [bt] (0) /home/rc/capstone/venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0x2a6e7c) [0x7d4da58a6e7c]\n  [bt] (1) /home/rc/capstone/venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0xa5b61e) [0x7d4da605b61e]\n  [bt] (2) /home/rc/capstone/venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0xa9282e) [0x7d4da609282e]\n  [bt] (3) /home/rc/capstone/venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0x6823c7) [0x7d4da5c823c7]\n  [bt] (4) /home/rc/capstone/venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0x688b32) [0x7d4da5c88b32]\n  [bt] (5) /home/rc/capstone/venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(XGBoosterGetNumFeature+0x34) [0x7d4da57b4464]\n  [bt] (6) /lib/x86_64-linux-gnu/libffi.so.8(+0x7b16) [0x7d4dc942eb16]\n  [bt] (7) /lib/x86_64-linux-gnu/libffi.so.8(+0x43ef) [0x7d4dc942b3ef]\n  [bt] (8) /lib/x86_64-linux-gnu/libffi.so.8(ffi_call+0x12e) [0x7d4dc942e0be]\n\n\n- Free memory: 3.21362GB\n- Requested memory: 4B\n\nStack trace:\n  [bt] (0) /home/rc/capstone/venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0x2a6e7c) [0x7d4da58a6e7c]\n  [bt] (1) /home/rc/capstone/venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0xa5c4b3) [0x7d4da605c4b3]\n  [bt] (2) /home/rc/capstone/venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0xa92980) [0x7d4da6092980]\n  [bt] (3) /home/rc/capstone/venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0x6823c7) [0x7d4da5c823c7]\n  [bt] (4) /home/rc/capstone/venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0x688b32) [0x7d4da5c88b32]\n  [bt] (5) /home/rc/capstone/venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(XGBoosterGetNumFeature+0x34) [0x7d4da57b4464]\n  [bt] (6) /lib/x86_64-linux-gnu/libffi.so.8(+0x7b16) [0x7d4dc942eb16]\n  [bt] (7) /lib/x86_64-linux-gnu/libffi.so.8(+0x43ef) [0x7d4dc942b3ef]\n  [bt] (8) /lib/x86_64-linux-gnu/libffi.so.8(ffi_call+0x12e) [0x7d4dc942e0be]\n\n"
 }

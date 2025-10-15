@@ -1,72 +1,52 @@
 IMR XGBoost Regression Results Summary
 ================================================================================
-Timestamp: 2025-10-10T05:17:49.644998Z
+Timestamp: 2025-10-15T09:19:08.382919Z
 Python: 3.12.3 | Platform: Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39
 
 Configuration
 --------------------------------------------------------------------------------
-Data file: out/Districtwise_mice_fast.csv
+Data file: out/Districtwise_ridge.csv
 Target column: YY_Infant_Mortality_Rate_Imr_Total_Person
 Excluded ID cols: State_Name, State_District_Name
-Test size: 0.2
-Eval size: 0.1
+Test size: 0.15
+Eval size: 0.15
 Random state: 42
-Classification threshold: 30.0
+Classification threshold: 31.0
 
 Model Metrics
 --------------------------------------------------------------------------------
-RMSE                     : 1.812935
-MAE                      : 0.952536
-R2                       : 0.987093
-EXPLAINED_VARIANCE       : 0.987189
-NUM_FEATURES_NUMERIC     : 1283.000000
+RMSE                     : 1.889281
+MAE                      : 0.929552
+R2                       : 0.985532
+EXPLAINED_VARIANCE       : 0.986111
+NUM_FEATURES_NUMERIC     : 641.000000
 NUM_FEATURES_CATEGORICAL : 0.000000
-N_ESTIMATORS             : 2000.000000
-LEARNING_RATE            : 0.030000
+N_ESTIMATORS             : 2250.000000
+LEARNING_RATE            : 0.015000
 MAX_DEPTH                : 6.000000
 SUBSAMPLE                : 0.800000
 COLSAMPLE_BYTREE         : 0.800000
-MIN_CHILD_WEIGHT         : 1.500000
-REG_ALPHA                : 0.000000
-REG_LAMBDA               : 1.000000
+MIN_CHILD_WEIGHT         : 3.000000
+REG_ALPHA                : 0.500000
+REG_LAMBDA               : 5.000000
 GAMMA                    : 0.000000
 MAX_BIN                  : 256.000000
-EARLY_STOPPING_ROUNDS    : 100.000000
-EVAL_SIZE                : 0.100000
-FIT_SUPPORTS_CALLBACKS   : 0.000000
-FIT_SUPPORTS_ES_ROUNDS   : 0.000000
-
-Top 10 Features by Permutation Importance
---------------------------------------------------------------------------------
- 1. num__ZZ_Infant_Mortality_Rate_Rural_Upper_Limit | mean=0.523313 | std=0.057805
- 2. num__ZZ_Infant_Mortality_Rate_Rural_Lower_Limit | mean=0.080854 | std=0.011669
- 3. num__YY_Infant_Mortality_Rate_Imr_Rural_Female | mean=0.025661 | std=0.003428
- 4. num__YY_Infant_Mortality_Rate_Imr_Rural_Male | mean=0.015754 | std=0.001387
- 5. num__YY_Infant_Mortality_Rate_Imr_Rural_Person | mean=0.008777 | std=0.001109
- 6. num__ZZ_Infant_Mortality_Rate_Urban_Lower_Limit | mean=0.008076 | std=0.000552
- 7. num__YY_Post_Neo_Natal_Mortality_Rate_Total | mean=0.001432 | std=0.000173
- 8. num__YY_Neo_Natal_Mortality_Rate_Urban | mean=0.000655 | std=0.000112
- 9. num__UU_Children_Suffering_From_Diarrhoea_Rural | mean=0.000551 | std=0.000445
-10. num__NN_Current_Usage_Withdrawal_Urban | mean=0.000309 | std=0.000137
-
-Feature Importance Artifacts
---------------------------------------------------------------------------------
-feature_importance_permutation.csv
-feature_importance_permutation.png
+EARLY_STOPPING_ROUNDS    : 300.000000
+EVAL_SIZE                : 0.150000
 
 Sample Predictions (first 10)
 --------------------------------------------------------------------------------
  Actual  Predicted
-  52.00  55.458801
-  79.85  78.860542
-  67.00  68.250809
-  68.80  68.103294
-  50.46  50.831379
-  44.94  44.840672
-  80.39  80.543114
-  52.00  51.805191
-  43.00  43.371407
-  54.93  54.782173
+  52.00  55.527439
+  79.85  78.543198
+  67.00  67.520248
+  68.80  66.979202
+  50.46  50.560104
+  44.94  45.159538
+  80.39  80.614403
+  52.00  51.663982
+  43.00  43.002777
+  54.93  54.805965
 
 Artifacts
 --------------------------------------------------------------------------------

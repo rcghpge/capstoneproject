@@ -42,4 +42,5 @@ venv/
 env/
 ENV/
 
-
+# Local builds
+*.patch
