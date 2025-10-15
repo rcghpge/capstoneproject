@@ -1,2 +1,2 @@
 *.py linguist-language=Python
-*.ipynb linguist-documentation
+*.ipynb linguist-language=Python
