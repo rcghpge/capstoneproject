@@ -138,7 +138,7 @@ def build_preprocessor_from_X(X: pd.DataFrame):
         ("sc", RobustScaler())
     ])
     num_all_missing_pipe = Pipeline([
-        ("imp", SimpleImputer(strategy="constant", fill_value=0.0, keep_empty_features=True)),
+        ("imp", SimpleImputer(strategy="constant", fill_value=0.0)), # keep_empty_features=True)),
         ("sc", RobustScaler())
     ])
     cat_ok_pipe = Pipeline([
