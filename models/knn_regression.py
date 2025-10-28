@@ -20,11 +20,6 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-<<<<<<< HEAD
-
-
-=======
->>>>>>> f6892b4 (knn model)
 import re
 import json
 import joblib
@@ -44,22 +39,13 @@ from sklearn.model_selection import train_test_split, KFold
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 """
-<<<<<<< HEAD
-
-=======
->>>>>>> f6892b4 (knn model)
 Example Usage:
 python -m models.knn_regression --data data/Key_indicator_districtwise.csv \
 --target Infant_Mortality_Rate_Imr_Total_Person \
 --id-cols State_Name State_District_Name \
-<<<<<<< HEAD
---outdir ./knn_test \
-
-=======
 --test-size 0.25 \
 --random-state 42 \
 --outdir knn
->>>>>>> f6892b4 (knn model)
 """
 
 def load_data(data_path):
@@ -226,50 +212,31 @@ def main(args):
 
     # RFECV uses KNN regressor on preprocessed numeric numpy arrays
     """
-<<<<<<< HEAD
-    Tunable params:
-    # weights: distance. metric: euclidean, chebyshev,
-    # mahalanobis, rogerstanimoto, l2, manhattan, yule, seuclidean, hamming, canberra, correlation, dice, precomputed, sokalmichener
-    # cityblock, sokalsneath, jaccard, l1, p, chebyshev, sqeuclidean, man_euclidean, cosine , braycurtis, russellrao, minkowski, infinity, haversine
-=======
     KNN Regressor tunable params:
     # weights: distance. metric: euclidean, chebyshev, mahalanobis, rogerstanimoto, l2, manhattan, yule, seuclidean,
     # hamming, canberra, correlation, dice, precomputed, sokalmichener, cityblock, sokalsneath, jaccard, l1, p,
     # chebyshev, sqeuclidean, man_euclidean, cosine , braycurtis, russellrao, minkowski, infinity, haversine
->>>>>>> f6892b4 (knn model)
     """
     cv = KFold(n_splits=5, shuffle=True, random_state=args.random_state)
     rf = RandomForestRegressor(random_state=42)
     selector = RFECV(estimator=rf, step=10, cv=cv, scoring='neg_mean_squared_error', n_jobs=-1, verbose=2)
-<<<<<<< HEAD
-    # knn = KNeighborsRegressor(n_neighbors=6, weights='distance', metric='braycurtis')
-    # selector = RFECV(estimator=knn, step=10, cv=cv,
-    #                scoring='neg_mean_squared_error', n_jobs=-1, verbose=2)
-=======
->>>>>>> f6892b4 (knn model)
     selector.fit(X_train_processed, y_train)
 
     # Apply feature mask from RFECV
     X_train_selected = selector.transform(X_train_processed)
     X_test_selected = selector.transform(X_test_processed)
 
-<<<<<<< HEAD
-=======
     # Save model framework as numpy arrays for model architecture proofs
     np.save('knn/X_train_selected.npy', X_train_selected)
     np.save('knn/X_test_selected.npy', X_test_selected)
     np.save('knn/y_train.npy', y_train)
     np.save('knn/y_test.npy', y_test)
 
->>>>>>> f6892b4 (knn model)
     # Train final KNN on selected features
     final_model = KNeighborsRegressor(n_neighbors=6, weights='distance', metric='braycurtis')
     final_model.fit(X_train_selected, y_train)
     y_pred = final_model.predict(X_test_selected)
-<<<<<<< HEAD
-=======
     np.save('knn/y_pred.npy', y_pred)
->>>>>>> f6892b4 (knn model)
 
     mae = mean_absolute_error(y_test, y_pred)
     rmse = np.sqrt(mean_squared_error(y_test, y_pred))
@@ -281,10 +248,7 @@ def main(args):
 
     # Training metrics
     y_train_pred = final_model.predict(X_train_selected)
-<<<<<<< HEAD
-=======
     np.save('knn/y_train_pred.npy', y_train_pred)
->>>>>>> f6892b4 (knn model)
     n_tr = len(y_train)
     p_tr = X_train_selected.shape[1]
     train_metrics = {
@@ -296,10 +260,7 @@ def main(args):
 
     # Test metrics
     y_test_pred = final_model.predict(X_test_selected)
-<<<<<<< HEAD
-=======
     np.save('knn/y_test_pred.npy', y_test_pred)
->>>>>>> f6892b4 (knn model)
     n_te = len(y_test)
     p_te = X_test_selected.shape[1]
     test_metrics = {
