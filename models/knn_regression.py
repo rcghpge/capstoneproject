@@ -33,10 +33,10 @@ from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.feature_selection import RFECV
 from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import OneHotEncoder, RobustScaler
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import train_test_split, KFold
 from sklearn.neighbors import KNeighborsRegressor
+from sklearn.model_selection import train_test_split, KFold
+from sklearn.preprocessing import OneHotEncoder, RobustScaler
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 """
 Example Usage:
@@ -148,7 +148,7 @@ def plot_feature_importances(importances, feature_names, out_dir, top_n=10):
     plt.barh(range(top_n), top_importances, align='center', color='steelblue')
     plt.yticks(range(top_n), top_features)
     plt.xlabel("Feature Importances")
-    plt.title(f"Top {top_n} Random Forest Features")
+    plt.title(f"Top {top_n} Random Forest Base Estimator Features")
     plt.tight_layout()
     plt.savefig(Path(out_dir) / 'feature_importances.png')
     plt.close()
@@ -197,11 +197,12 @@ def main(args):
     df.columns = [re.sub(r'^[A-Z]{2}_', '', col) for col in df.columns]
     id_cols_fixed = [re.sub(r'^[A-Z]{2}_', '', col) for col in args.id_cols]
     target_col = args.target
+    out_dir = Path(args.outdir)
+    out_dir.mkdir(exist_ok=True, parents=True)
 
     X = df.drop(columns=[args.target]+id_cols_fixed)
     y = df[args.target]
 
-    # Split before preprocessing and feature selection to avoid data leakage
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=args.test_size, random_state=args.random_state)
 
@@ -210,7 +211,6 @@ def main(args):
     X_test_processed = preprocessor.transform(X_test)
     feature_names = get_feature_names(preprocessor)
 
-    # RFECV uses KNN regressor on preprocessed numeric numpy arrays
     """
     KNN Regressor tunable params:
     # weights: distance. metric: euclidean, chebyshev, mahalanobis, rogerstanimoto, l2, manhattan, yule, seuclidean,
@@ -227,16 +227,16 @@ def main(args):
     X_test_selected = selector.transform(X_test_processed)
 
     # Save model framework as numpy arrays for model architecture proofs
-    np.save('knn/X_train_selected.npy', X_train_selected)
-    np.save('knn/X_test_selected.npy', X_test_selected)
-    np.save('knn/y_train.npy', y_train)
-    np.save('knn/y_test.npy', y_test)
+    np.save(out_dir / 'X_train_selected.npy', X_train_selected)
+    np.save(out_dir / 'X_test_selected.npy', X_test_selected)
+    np.save(out_dir / 'y_train.npy', y_train)
+    np.save(out_dir / 'y_test.npy', y_test)
 
     # Train final KNN on selected features
     final_model = KNeighborsRegressor(n_neighbors=6, weights='distance', metric='braycurtis')
     final_model.fit(X_train_selected, y_train)
     y_pred = final_model.predict(X_test_selected)
-    np.save('knn/y_pred.npy', y_pred)
+    np.save(out_dir / 'y_pred.npy', y_pred)
 
     mae = mean_absolute_error(y_test, y_pred)
     rmse = np.sqrt(mean_squared_error(y_test, y_pred))
@@ -245,10 +245,9 @@ def main(args):
     p = X_train_selected.shape[1]
     adj_r2 = 1 - (1-r2)*(n-1)/(n-p-1) if n > p + 1 else None
 
-
     # Training metrics
     y_train_pred = final_model.predict(X_train_selected)
-    np.save('knn/y_train_pred.npy', y_train_pred)
+    np.save(out_dir / 'y_train_pred.npy', y_train_pred)
     n_tr = len(y_train)
     p_tr = X_train_selected.shape[1]
     train_metrics = {
@@ -260,7 +259,7 @@ def main(args):
 
     # Test metrics
     y_test_pred = final_model.predict(X_test_selected)
-    np.save('knn/y_test_pred.npy', y_test_pred)
+    np.save(out_dir / 'y_test_pred.npy', y_test_pred)
     n_te = len(y_test)
     p_te = X_test_selected.shape[1]
     test_metrics = {
@@ -279,8 +278,7 @@ def main(args):
         'Selected Features Count': p
     }
 
-    out_dir = Path(args.outdir)
-    out_dir.mkdir(exist_ok=True, parents=True)
+    # Build pipeline
     joblib.dump(final_model, out_dir / 'knn_final_model.joblib')
     joblib.dump(preprocessor, out_dir / 'preprocessor.joblib')
     joblib.dump(selector, out_dir / 'rfecv_selector.joblib')
@@ -294,6 +292,21 @@ def main(args):
     plot_statewise_histogram(df, target_col, 'State_Name', out_dir)
     plot_statewise_facets(df, target_col, 'State_Name', out_dir)
     print(json.dumps(metrics, indent=2))
+
+
+    # Testing KNN framework. WIP for group review.
+    rf = selector.estimator_
+    test_importances = rf.feature_importances_
+
+    print("RFECV Feature Importance:")
+    for name, importance in zip(feature_names, test_importances):
+        print(f"{name}: {importance:.4f}")
+
+    # Working out the quirks here.
+    #feature_names_test = preprocessor.get_feature_names_out()
+    #selected_mask = selector.get_support()
+    #selected_features = np.array(feature_names_test)[selected_mask]
+    #print("Selected features:", selected_features)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Robust KNN regression with RFECV feature selection')
