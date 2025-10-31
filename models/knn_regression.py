@@ -294,8 +294,6 @@ def main(args):
     plot_statewise_facets(df, target_col, 'State_Name', out_dir)
     print(json.dumps(metrics, indent=2))
 
-
-    # Testing KNN framework. WIP for group review.
     knn_features = selector.estimator_.feature_importances_
     rf_support = selector.get_support()
     rf_preprocessor = preprocessor.get_feature_names_out()

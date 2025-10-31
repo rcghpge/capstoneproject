@@ -48,3 +48,4 @@ ENV/
 *.joblib
 out/
 prototype/
+test/
