@@ -148,7 +148,7 @@ def plot_feature_importances(importances, feature_names, out_dir, top_n=10):
     plt.barh(range(top_n), top_importances, align='center', color='steelblue')
     plt.yticks(range(top_n), top_features)
     plt.xlabel("Feature Importances")
-    plt.title(f"Top {top_n} Random Forest Base Estimator Features")
+    plt.title(f"Top {top_n} KNN Model Features")
     plt.tight_layout()
     plt.savefig(Path(out_dir) / 'feature_importances.png')
     plt.close()
@@ -194,13 +194,14 @@ def save_metrics(metrics, out_dir):
 
 def main(args):
     df = load_data(args.data)
-    df.columns = [re.sub(r'^[A-Z]{2}_', '', col) for col in df.columns]
-    id_cols_fixed = [re.sub(r'^[A-Z]{2}_', '', col) for col in args.id_cols]
+    #df.columns = [re.sub(r'^[A-Z]{2}_', '', col) for col in df.columns]
+    #gid_cols_fixed = [re.sub(r'^[A-Z]{2}_', '', col) for col in args.id_cols]
+    id_cols = args.id_cols
     target_col = args.target
     out_dir = Path(args.outdir)
     out_dir.mkdir(exist_ok=True, parents=True)
 
-    X = df.drop(columns=[args.target]+id_cols_fixed)
+    X = df.drop(columns=[args.target]+id_cols) #+id_cols_fixed)
     y = df[args.target]
 
     X_train, X_test, y_train, y_test = train_test_split(
@@ -295,18 +296,16 @@ def main(args):
 
 
     # Testing KNN framework. WIP for group review.
-    rf = selector.estimator_
-    test_importances = rf.feature_importances_
+    knn_features = selector.estimator_.feature_importances_
+    rf_support = selector.get_support()
+    rf_preprocessor = preprocessor.get_feature_names_out()
+    rf_features = np.array(rf_preprocessor)[rf_support]
 
-    print("RFECV Feature Importance:")
-    for name, importance in zip(feature_names, test_importances):
+    print("\nKNN Feature Importance:")
+    for name, importance in zip(feature_names, knn_features):
         print(f"{name}: {importance:.4f}")
 
-    # Working out the quirks here.
-    #feature_names_test = preprocessor.get_feature_names_out()
-    #selected_mask = selector.get_support()
-    #selected_features = np.array(feature_names_test)[selected_mask]
-    #print("Selected features:", selected_features)
+    print("\nRF Feature Importance:\n", rf_features)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Robust KNN regression with RFECV feature selection')
