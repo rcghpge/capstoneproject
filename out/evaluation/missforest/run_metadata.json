@@ -1,8 +1,0 @@
-{
-  "method":"missforest",
-  "original_csv":"data\/Key_indicator_districtwise.csv",
-  "imputed_csv":"out\/Districtwise_rf.csv",
-  "id_cols":[
-
-  ]
-}
