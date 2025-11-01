@@ -305,6 +305,17 @@ def main(args):
 
     print("\nRF Feature Importance:\n", rf_features)
 
+    # KNN Model Benchmark Testing and Model Validation
+    print("\nPreprocessor features:\n", len(preprocessor.get_feature_names_out())) # remove len() to output all feature names
+    #print("\nRF boolean support mask:\n:", selector.get_support())
+    #print("\nRF boolean support mask length:\n", len(selector.get_support()))
+    #print("\nX_train_processed shape:\n", X_train_processed.shape)
+    print("\nknn_features:\n", knn_features)
+    print("\nLength of knn_features:\n", len(knn_features))
+    print("\nrf_features:\n", rf_features)
+    print("\nLength of rf_features:\n", len(rf_features))
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Robust KNN regression with RFECV feature selection')
     parser.add_argument('--data', required=True, help='Dataset path (csv or parquet)')
