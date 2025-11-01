@@ -1,0 +1,8 @@
+Regression Metrics Summary
+==========================
+rmse: 0.723265
+mae: 0.522055
+r2: 0.997946
+explained_variance: 0.997978
+selected_feature_count: 9.000000
+adj_r2: 0.997552
