@@ -44,6 +44,7 @@ env/
 ENV/
 
 # Local builds
+*.bak
 *.patch
 *.joblib
 out/
