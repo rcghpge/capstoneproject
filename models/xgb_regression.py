@@ -1,5 +1,25 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+# MIT License
+# See LICENSE file in the project root or at https://opensource.org/license/mit
+#
+# Copyright (c) 2025 Landon Nguyen, Alex Nguyen, Robert Cocker
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 import json
 import argparse
 import numpy as np
@@ -21,13 +41,6 @@ python -m models.xgb_regression --data data/Key_indicator_districtwise.csv \
 --target YY_Infant_Mortality_Rate_Imr_Total_Person --id-cols State_Name State_District_Name \
 --outdir ./xgb
 """
-
-
-import matplotlib.pyplot as plt
-import numpy as np
-from pathlib import Path
-import json
-import seaborn as sns
 
 def plot_and_save(y_true, y_pred, outdir):
     Path(outdir).mkdir(exist_ok=True, parents=True)
@@ -157,26 +170,21 @@ def main():
     outdir = Path(args.outdir)
     outdir.mkdir(parents=True, exist_ok=True)
 
-    # Load CSV data only
     if not args.data.endswith(".csv"):
         raise ValueError("Only CSV format supported in this script.")
     df = pd.read_csv(args.data)
 
-    # Features/target split
     X = df.drop(columns=[args.target] + args.id_cols)
     y = df[args.target].copy()
 
-    # Train/test split
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=args.test_size, random_state=args.random_state
     )
 
-    # Preprocessing
     preprocessor = build_preprocessor(X_train)
     X_train_processed = preprocessor.fit_transform(X_train)
     X_test_processed = preprocessor.transform(X_test)
 
-    # Setup XGBoost regressor
     xgb = XGBRegressor(
         n_estimators=args.n_estimators,
         learning_rate=args.learning_rate,
@@ -188,7 +196,6 @@ def main():
         verbosity=0
     )
 
-    # RFECV for feature selection using XGB as estimator
     cv = KFold(n_splits=5, shuffle=True, random_state=args.random_state)
     selector = RFECV(
         estimator=xgb,
@@ -200,12 +207,10 @@ def main():
     )
     selector.fit(X_train_processed, y_train)
 
-    # Get selected features names
     rf_support = selector.get_support()
     feature_names = preprocessor.get_feature_names_out()
     selected_features = np.array(feature_names)[rf_support]
 
-    # Transform train/test with selected features
     X_train_selected = selector.transform(X_train_processed)
     X_test_selected = selector.transform(X_test_processed)
 
@@ -223,8 +228,6 @@ def main():
     xgb_model.fit(X_train_selected, y_train)
     y_pred_train = xgb_model.predict(X_train_selected)
     y_test_pred = xgb_model.predict(X_test_selected)
-
-    # Predictions and evaluation
     y_pred = xgb_model.predict(X_test_selected)
 
     rmse = np.sqrt(mean_squared_error(y_test, y_pred))
@@ -245,7 +248,6 @@ def main():
         "adj_r2": adj_r2,
     }
 
-    # Save outputs
     np.save(outdir / "X_train_selected.npy", X_train_selected)
     np.save(outdir / "X_test_selected.npy", X_test_selected)
     np.save(outdir / "y_train.npy", y_train.to_numpy())
@@ -315,7 +317,7 @@ def main():
     plot_true_vs_pred(y_train, y_pred_train, outdir, "Train", train_metrics)
     plot_true_vs_pred(y_test, y_pred, outdir, "Test", test_metrics)
 
-    feature_importances = xgb_model.feature_importances_  # or selector.estimator_.feature_importances_
+    feature_importances = xgb_model.feature_importances_
     feature_names = selected_features
     plot_feature_importances(feature_importances, feature_names, outdir)
     plot_statewise_histogram(df, value_col=args.target, state_col="State_Name", outdir=outdir)
