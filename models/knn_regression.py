@@ -34,7 +34,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.feature_selection import RFECV
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.neighbors import KNeighborsRegressor
+from sklearn.neighbors import NearestNeighbors, KNeighborsRegressor
 from sklearn.model_selection import train_test_split, KFold
 from sklearn.preprocessing import OneHotEncoder, RobustScaler
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
@@ -76,43 +76,13 @@ def build_preprocessor(X):
     ])
     return preprocessor
 
-def plot_and_save(y_true, y_pred, out_dir):
-    Path(out_dir).mkdir(exist_ok=True, parents=True)
-
-    plt.figure()
-    plt.scatter(y_true, y_pred, alpha=0.6)
-    plt.plot([y_true.min(), y_true.max()], [y_true.min(), y_true.max()], 'r--')
-    plt.xlabel('Actual')
-    plt.ylabel('Predicted')
-    plt.title('Predicted vs Actual')
-    plt.savefig(Path(out_dir) / 'predicted_vs_actual.png')
-    plt.close()
-
-    residuals = y_true - y_pred
-    plt.figure()
-    plt.scatter(y_pred, residuals, alpha=0.6)
-    plt.axhline(0, linestyle='--', color='r')
-    plt.xlabel('Fitted Values')
-    plt.ylabel('Residuals')
-    plt.title('Residuals vs Fitted')
-    plt.savefig(Path(out_dir) / 'residuals_vs_fitted.png')
-    plt.close()
-
-    plt.figure()
-    plt.hist(residuals, bins=30, alpha=0.8)
-    plt.xlabel('Residual')
-    plt.ylabel('Frequency')
-    plt.title('Residual Histogram')
-    plt.savefig(Path(out_dir) / 'residual_histogram.png')
-    plt.close()
-
 def plot_true_vs_pred(y_true, y_pred, out_dir, subset_label, metrics):
     plt.figure(figsize=(8,5))
     plt.scatter(range(len(y_true)), y_true, color='black', label='True Value', s=20)
     plt.plot(range(len(y_pred)), y_pred, color='blue', label='Predicted Value')
     plt.xlabel('District')
     plt.ylabel('Infant Mortality Rate')
-    plt.title(f'Baseline {subset_label} Scatter Plot')
+    plt.title(f'{subset_label} Scatter Plot')
     plt.legend()
 
     textstr = '\n'.join((
@@ -125,7 +95,61 @@ def plot_true_vs_pred(y_true, y_pred, out_dir, subset_label, metrics):
                    fontsize=10, verticalalignment='bottom', horizontalalignment='right',
                    bbox=dict(boxstyle='round,pad=0.5', facecolor='lightgray', alpha=0.5))
     plt.tight_layout()
-    plt.savefig(Path(out_dir) / f'baseline_{subset_label.lower()}_scatter.png')
+    plt.savefig(Path(out_dir)/f'{subset_label.lower()}_scatter.png')
+    plt.close()
+
+def plot_residuals(y_true, y_pred, out_dir, split_name):
+    import matplotlib.pyplot as plt
+    from pathlib import Path
+
+    residuals = y_true - y_pred
+
+    plt.figure()
+    plt.scatter(y_pred, residuals, alpha=0.6)
+    plt.axhline(0, linestyle='--', color='r')
+    plt.xlabel('Fitted Values')
+    plt.ylabel('Residuals')
+    plt.title('Training Residuals Plot (Zoomed)')
+    plt.ylim(-0.04, 0.04)
+    plt.savefig(Path(out_dir)/'training_residuals_vs_fitted_zoomed.png')
+    plt.close()
+
+    plt.figure()
+    plt.scatter(y_pred, residuals, alpha=0.6)
+    plt.axhline(0, linestyle='--', color='r')
+    plt.xlabel('Fitted Values')
+    plt.ylabel('Residuals')
+    plt.title('Training Residuals Plot (Zoomed)')
+    lower = np.percentile(residuals, 1)
+    upper = np.percentile(residuals, 99)
+    plt.ylim(lower, upper)
+    plt.savefig(Path(out_dir)/'training_residuals_vs_fitted_zoomed2.png')
+    plt.close()
+
+    plt.figure()
+    plt.scatter(y_pred, residuals, alpha=0.6)
+    plt.axhline(0, linestyle='--', color='r')
+    plt.xlabel('Fitted Values')
+    plt.ylabel('Residuals')
+    plt.title(f'{split_name} Residuals Plot')
+    plt.savefig(Path(out_dir)/f'{split_name.lower()}_residuals_vs_fitted.png')
+    plt.close()
+
+    plt.figure()
+    plt.hist(residuals, bins=30, alpha=0.8)
+    plt.xlabel('Residual')
+    plt.ylabel('Frequency')
+    plt.title(f'{split_name} Residuals Distribution')
+    plt.savefig(Path(out_dir)/f'{split_name.lower()}_residuals_histogram.png')
+    plt.close()
+
+    plt.figure()
+    plt.scatter(y_true, y_pred, alpha=0.6)
+    plt.plot([y_true.min(), y_true.max()], [y_true.min(), y_true.max()], 'r--')
+    plt.xlabel('Actual')
+    plt.ylabel('Predicted')
+    plt.title('Predicted vs Actual')
+    plt.savefig(Path(out_dir)/'predicted_vs_actual.png')
     plt.close()
 
 def get_feature_names(preprocessor):
@@ -150,7 +174,7 @@ def plot_feature_importances(importances, feature_names, out_dir, top_n=10):
     plt.xlabel("Feature Importances")
     plt.title(f"Top {top_n} KNN Model Features")
     plt.tight_layout()
-    plt.savefig(Path(out_dir) / 'feature_importances.png')
+    plt.savefig(Path(out_dir)/'feature_importances.png')
     plt.close()
 
 def plot_statewise_histogram(df, value_col, state_col, out_dir):
@@ -158,7 +182,7 @@ def plot_statewise_histogram(df, value_col, state_col, out_dir):
     sns.histplot(data=df, x=value_col, hue=state_col, element="step", stat="count", common_norm=False, palette='bright', alpha=0.4)
     plt.title('Infant Mortality Rate State-Wise')
     plt.tight_layout()
-    plt.savefig(Path(out_dir) / 'statewise_histogram.png')
+    plt.savefig(Path(out_dir)/'statewise_histogram.png')
     plt.close()
 
 def plot_statewise_facets(df, value_col, state_col, out_dir):
@@ -169,17 +193,17 @@ def plot_statewise_facets(df, value_col, state_col, out_dir):
     g.set_axis_labels("Infant Mortality Rate", "Count")
     plt.subplots_adjust(top=0.9)
     g.fig.suptitle('Infant Mortality Rate State-Wise')
-    plt.savefig(Path(out_dir) / 'statewise_facets.png')
+    plt.savefig(Path(out_dir)/'statewise_facets.png')
     plt.close()
 
 def save_metrics_table(train_metrics, test_metrics, out_dir):
     import pandas as pd
     results = pd.DataFrame([train_metrics, test_metrics], index=['Train', 'Test'])
     results.index.name = 'Subset'
-    results.to_csv(Path(out_dir) / "regression_metrics_table.csv")
+    results.to_csv(Path(out_dir)/"regression_metrics_table.csv")
     try:
         import dataframe_image as dfi
-        dfi.export(results, Path(out_dir) / "regression_metrics_table.png")
+        dfi.export(results, Path(out_dir)/"regression_metrics_table.png")
     except:
         pass
 
@@ -194,14 +218,14 @@ def save_metrics(metrics, out_dir):
 
 def main(args):
     df = load_data(args.data)
-    #df.columns = [re.sub(r'^[A-Z]{2}_', '', col) for col in df.columns]
-    #gid_cols_fixed = [re.sub(r'^[A-Z]{2}_', '', col) for col in args.id_cols]
+    df.columns = [re.sub(r'^[A-Z]{2}_', '', col) for col in df.columns]
+    id_cols_fixed = [re.sub(r'^[A-Z]{2}_', '', col) for col in args.id_cols]
     id_cols = args.id_cols
     target_col = args.target
     out_dir = Path(args.outdir)
     out_dir.mkdir(exist_ok=True, parents=True)
 
-    X = df.drop(columns=[args.target]+id_cols) #+id_cols_fixed)
+    X = df.drop(columns=[args.target]+id_cols_fixed) #+id_cols
     y = df[args.target]
 
     X_train, X_test, y_train, y_test = train_test_split(
@@ -223,18 +247,15 @@ def main(args):
     selector = RFECV(estimator=rf, step=10, cv=cv, scoring='neg_mean_squared_error', n_jobs=-1, verbose=2)
     selector.fit(X_train_processed, y_train)
 
-    # Apply feature mask from RFECV
     X_train_selected = selector.transform(X_train_processed)
     X_test_selected = selector.transform(X_test_processed)
 
-    # Save model framework as numpy arrays for model architecture proofs
     np.save(out_dir / 'X_train_selected.npy', X_train_selected)
     np.save(out_dir / 'X_test_selected.npy', X_test_selected)
     np.save(out_dir / 'y_train.npy', y_train)
     np.save(out_dir / 'y_test.npy', y_test)
 
-    # Train final KNN on selected features
-    final_model = KNeighborsRegressor(n_neighbors=6, weights='distance', metric='braycurtis')
+    final_model = KNeighborsRegressor(n_neighbors=15, weights='distance', metric='manhattan')
     final_model.fit(X_train_selected, y_train)
     y_pred = final_model.predict(X_test_selected)
     np.save(out_dir / 'y_pred.npy', y_pred)
@@ -246,7 +267,6 @@ def main(args):
     p = X_train_selected.shape[1]
     adj_r2 = 1 - (1-r2)*(n-1)/(n-p-1) if n > p + 1 else None
 
-    # Training metrics
     y_train_pred = final_model.predict(X_train_selected)
     np.save(out_dir / 'y_train_pred.npy', y_train_pred)
     n_tr = len(y_train)
@@ -258,7 +278,6 @@ def main(args):
         'MAE': mean_absolute_error(y_train, y_train_pred)
     }
 
-    # Test metrics
     y_test_pred = final_model.predict(X_test_selected)
     np.save(out_dir / 'y_test_pred.npy', y_test_pred)
     n_te = len(y_test)
@@ -270,7 +289,6 @@ def main(args):
         'MAE': mean_absolute_error(y_test, y_test_pred)
     }
 
-    # Final model metrics
     metrics = {
         'MAE': mae,
         'RMSE': rmse,
@@ -279,34 +297,40 @@ def main(args):
         'Selected Features Count': p
     }
 
-    # Build pipeline
     joblib.dump(final_model, out_dir / 'knn_final_model.joblib')
     joblib.dump(preprocessor, out_dir / 'preprocessor.joblib')
     joblib.dump(selector, out_dir / 'rfecv_selector.joblib')
 
     save_metrics(metrics, out_dir)
     save_metrics_table(train_metrics, test_metrics, out_dir)
-    plot_and_save(y_test, y_pred, out_dir)
     plot_true_vs_pred(y_train, y_train_pred, out_dir, 'Training', train_metrics)
     plot_true_vs_pred(y_test, y_test_pred, out_dir, 'Testing', test_metrics)
+    plot_residuals(y_train, y_train_pred, out_dir, 'Training')
+    plot_residuals(y_test, y_test_pred, out_dir, 'Testing')
     plot_feature_importances(selector.estimator_.feature_importances_, feature_names, out_dir)
     plot_statewise_histogram(df, target_col, 'State_Name', out_dir)
     plot_statewise_facets(df, target_col, 'State_Name', out_dir)
-    print(json.dumps(metrics, indent=2))
 
     knn_features = selector.estimator_.feature_importances_
     rf_support = selector.get_support()
     rf_preprocessor = preprocessor.get_feature_names_out()
     rf_features = np.array(rf_preprocessor)[rf_support]
 
+    y_shuffled = np.random.permutation(y_train)
+    test_selector = RFECV(estimator=rf, step=10, cv=cv, scoring='neg_mean_squared_error', n_jobs=-1, verbose=2)
+    test_selector.fit(X_train_processed, y_shuffled)
+    final_model.fit(test_selector.transform(X_train_processed), y_shuffled)
+    y_train_pred = final_model.predict(test_selector.transform(X_train_processed))
+    print("\nKNN Regression Model Summary:")
+    print("Training score (r2) with random targets:", r2_score(y_shuffled, y_train_pred))
+    print(json.dumps(metrics, indent=2))
     print("\nKNN Feature Importance:")
     for name, importance in zip(feature_names, knn_features):
         print(f"{name}: {importance:.4f}")
 
     print("\nRF Feature Importance:\n", rf_features)
 
-    # KNN Model Benchmark Testing and Model Validation
-    print("\nPreprocessor features:\n", len(preprocessor.get_feature_names_out())) # remove len() to output all feature names
+    print("\nPreprocessor features:\n", len(preprocessor.get_feature_names_out()))
     #print("\nRF boolean support mask:\n:", selector.get_support())
     #print("\nRF boolean support mask length:\n", len(selector.get_support()))
     #print("\nX_train_processed shape:\n", X_train_processed.shape)
@@ -315,6 +339,15 @@ def main(args):
     print("\nrf_features:\n", rf_features)
     print("\nLength of rf_features:\n", len(rf_features))
 
+    identical = np.allclose(y_train_pred, y_train)
+    print("\nAll training predictions match targets:", identical)
+    nbrs = NearestNeighbors(n_neighbors=1, metric='manhattan').fit(X_train_selected)
+    distances, indices = nbrs.kneighbors(X_train_selected)
+    print("Minimum neighbor distances:", np.min(distances, axis=1))
+    train_residuals = y_train - y_train_pred
+    test_residuals = y_test - y_test_pred
+    print("\nTraining residuals:\n", train_residuals)
+    print("\nTesting residuals:\n", test_residuals)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Robust KNN regression with RFECV feature selection')
