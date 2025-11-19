@@ -95,7 +95,7 @@ def plot_true_vs_pred(y_true, y_pred, out_dir, subset_label, metrics):
                    fontsize=10, verticalalignment='bottom', horizontalalignment='right',
                    bbox=dict(boxstyle='round,pad=0.5', facecolor='lightgray', alpha=0.5))
     plt.tight_layout()
-    plt.savefig(Path(out_dir)/f'{subset_label.lower()}_scatter.png')
+    plt.savefig(Path(out_dir)/f'{subset_label.lower()}_scatter_plot.png')
     plt.close()
 
 def plot_residuals(y_true, y_pred, out_dir, split_name):
@@ -109,9 +109,10 @@ def plot_residuals(y_true, y_pred, out_dir, split_name):
     plt.axhline(0, linestyle='--', color='r')
     plt.xlabel('Fitted Values')
     plt.ylabel('Residuals')
-    plt.title('Training Residuals Plot (Zoomed)')
-    plt.ylim(-0.04, 0.04)
-    plt.savefig(Path(out_dir)/'training_residuals_vs_fitted_zoomed.png')
+    plt.title(r'{split_name} Residuals Plot (Zoomed)')
+    #plt.xlim(0, 100)
+    plt.ylim(-0.000000000000005, 0.000000000000005)
+    plt.savefig(Path(out_dir)/f'{split_name.lower()}_residuals_vs_fitted_zoomed_plot.png')
     plt.close()
 
     plt.figure()
@@ -119,11 +120,49 @@ def plot_residuals(y_true, y_pred, out_dir, split_name):
     plt.axhline(0, linestyle='--', color='r')
     plt.xlabel('Fitted Values')
     plt.ylabel('Residuals')
-    plt.title('Training Residuals Plot (Zoomed)')
-    lower = np.percentile(residuals, 1)
-    upper = np.percentile(residuals, 99)
-    plt.ylim(lower, upper)
-    plt.savefig(Path(out_dir)/'training_residuals_vs_fitted_zoomed2.png')
+    plt.title(f'{split_name} Residuals Plot (Zoomed2)')
+    plt.ylim(np.percentile(residuals, 0.1), np.percentile(residuals, 99.9))
+    plt.savefig(Path(out_dir)/f'{split_name.lower()}_residuals_vs_fitted_zoomed2_plot.png')
+    plt.close()
+
+    plt.figure()
+    plt.scatter(y_pred, residuals, alpha=0.6)
+    plt.axhline(0, linestyle='--', color='r')
+    plt.xlabel('Fitted Values')
+    plt.ylabel('Residuals')
+    plt.title(f'{split_name} Residuals Plot (Zoomed3)')
+    plt.ylim(residuals.min() - 0.01, residuals.max() + 0.01)
+    plt.savefig(Path(out_dir)/f'{split_name.lower()}_residuals_vs_fitted_zoomed3_plot.png')
+    plt.close()
+
+    plt.figure()
+    plt.scatter(y_pred, residuals, alpha=0.6)
+    plt.axhline(0, linestyle='--', color='r')
+    plt.xlabel('Fitted Values')
+    plt.ylabel('Residuals')
+    plt.title(f'{split_name} Residuals Plot (Full Range)')
+    plt.ylim(residuals.min(), residuals.max())
+    plt.savefig(Path(out_dir)/f'{split_name.lower()}_residuals_full_range_plot.png')
+    plt.close()
+
+    plt.figure()
+    plt.scatter(y_pred, residuals, alpha=0.6)
+    plt.axhline(0, linestyle='--', color='r')
+    plt.xlabel('Fitted Values')
+    plt.ylabel('Residuals')
+    plt.title(f'{split_name} Residuals Plot (Full Range)')
+    plt.ylim(residuals.min(), residuals.max())
+    plt.savefig(Path(out_dir)/f'{split_name.lower()}_residuals_full_range_plot.png')
+    plt.close()
+
+    plt.figure()
+    plt.scatter(y_pred, residuals, alpha=0.6)
+    plt.axhline(0, linestyle='--', color='r')
+    plt.xlabel('Fitted Values')
+    plt.ylabel('Residuals')
+    plt.title(f'{split_name} Residuals Plot (Full Range)')
+    plt.ylim(residuals.min(), residuals.max())
+    plt.savefig(Path(out_dir)/f'{split_name.lower()}_residuals_full_range_plot.png')
     plt.close()
 
     plt.figure()
@@ -132,13 +171,13 @@ def plot_residuals(y_true, y_pred, out_dir, split_name):
     plt.xlabel('Fitted Values')
     plt.ylabel('Residuals')
     plt.title(f'{split_name} Residuals Plot')
-    plt.savefig(Path(out_dir)/f'{split_name.lower()}_residuals_vs_fitted.png')
+    plt.savefig(Path(out_dir)/f'{split_name.lower()}_residuals_vs_fitted_plot.png')
     plt.close()
 
-    plt.figure()
-    plt.hist(residuals, bins=30, alpha=0.8)
+    plt.figure(figsize=(6, 4))
+    plt.hist(residuals, bins=10, color='steelblue', alpha=0.8)
     plt.xlabel('Residual')
-    plt.ylabel('Frequency')
+    plt.ylabel('Count')
     plt.title(f'{split_name} Residuals Distribution')
     plt.savefig(Path(out_dir)/f'{split_name.lower()}_residuals_histogram.png')
     plt.close()
@@ -148,8 +187,8 @@ def plot_residuals(y_true, y_pred, out_dir, split_name):
     plt.plot([y_true.min(), y_true.max()], [y_true.min(), y_true.max()], 'r--')
     plt.xlabel('Actual')
     plt.ylabel('Predicted')
-    plt.title('Predicted vs Actual')
-    plt.savefig(Path(out_dir)/'predicted_vs_actual.png')
+    plt.title('Predicted vs Actual Plot')
+    plt.savefig(Path(out_dir)/'predicted_vs_actual_plot.png')
     plt.close()
 
 def get_feature_names(preprocessor):
@@ -174,7 +213,7 @@ def plot_feature_importances(importances, feature_names, out_dir, top_n=10):
     plt.xlabel("Feature Importances")
     plt.title(f"Top {top_n} KNN Model Features")
     plt.tight_layout()
-    plt.savefig(Path(out_dir)/'feature_importances.png')
+    plt.savefig(Path(out_dir)/'feature_importance_graph.png')
     plt.close()
 
 def plot_statewise_histogram(df, value_col, state_col, out_dir):
@@ -193,17 +232,33 @@ def plot_statewise_facets(df, value_col, state_col, out_dir):
     g.set_axis_labels("Infant Mortality Rate", "Count")
     plt.subplots_adjust(top=0.9)
     g.fig.suptitle('Infant Mortality Rate State-Wise')
-    plt.savefig(Path(out_dir)/'statewise_facets.png')
+    plt.savefig(Path(out_dir)/'statewise_facets_histogram.png')
+    plt.close()
+
+def plot_granularity(y_true, y_pred, out_dir, split_name, jitter_level=1e-6):
+    residuals = y_true - y_pred
+    if np.all(residuals == residuals.values[0]):
+        residuals_jitter = residuals + np.random.normal(0, jitter_level, size=residuals.shape)
+    else:
+        residuals_jitter = residuals
+
+    plt.figure()
+    plt.scatter(y_pred, residuals_jitter, alpha=0.6)
+    plt.axhline(0, linestyle='--', color='r')
+    plt.xlabel('Fitted Values')
+    plt.ylabel('Residuals')
+    plt.title(f'{split_name} Residuals Plot (Granularity)')
+    plt.savefig(Path(out_dir)/f'{split_name.lower()}_residuals_granularity_plot.png')
     plt.close()
 
 def save_metrics_table(train_metrics, test_metrics, out_dir):
     import pandas as pd
     results = pd.DataFrame([train_metrics, test_metrics], index=['Train', 'Test'])
     results.index.name = 'Subset'
-    results.to_csv(Path(out_dir)/"regression_metrics_table.csv")
+    results.to_csv(Path(out_dir)/"regression_metrics.csv")
     try:
         import dataframe_image as dfi
-        dfi.export(results, Path(out_dir)/"regression_metrics_table.png")
+        dfi.export(results, Path(out_dir)/"regression_metrics.png")
     except:
         pass
 
@@ -217,15 +272,15 @@ def save_metrics(metrics, out_dir):
             f.write(f'{key}: {value}\n')
 
 def main(args):
+    out_dir = Path(args.outdir)
     df = load_data(args.data)
     df.columns = [re.sub(r'^[A-Z]{2}_', '', col) for col in df.columns]
     id_cols_fixed = [re.sub(r'^[A-Z]{2}_', '', col) for col in args.id_cols]
     id_cols = args.id_cols
     target_col = args.target
-    out_dir = Path(args.outdir)
     out_dir.mkdir(exist_ok=True, parents=True)
 
-    X = df.drop(columns=[args.target]+id_cols_fixed) #+id_cols
+    X = df.drop(columns=[args.target]+id_cols_fixed)
     y = df[args.target]
 
     X_train, X_test, y_train, y_test = train_test_split(
@@ -250,15 +305,15 @@ def main(args):
     X_train_selected = selector.transform(X_train_processed)
     X_test_selected = selector.transform(X_test_processed)
 
-    np.save(out_dir / 'X_train_selected.npy', X_train_selected)
-    np.save(out_dir / 'X_test_selected.npy', X_test_selected)
-    np.save(out_dir / 'y_train.npy', y_train)
-    np.save(out_dir / 'y_test.npy', y_test)
+    np.save(out_dir/'X_train_selected.npy', X_train_selected)
+    np.save(out_dir/'X_test_selected.npy', X_test_selected)
+    np.save(out_dir/'y_train.npy', y_train)
+    np.save(out_dir/'y_test.npy', y_test)
 
     final_model = KNeighborsRegressor(n_neighbors=15, weights='distance', metric='manhattan')
     final_model.fit(X_train_selected, y_train)
     y_pred = final_model.predict(X_test_selected)
-    np.save(out_dir / 'y_pred.npy', y_pred)
+    np.save(out_dir/'y_pred.npy', y_pred)
 
     mae = mean_absolute_error(y_test, y_pred)
     rmse = np.sqrt(mean_squared_error(y_test, y_pred))
@@ -268,12 +323,12 @@ def main(args):
     adj_r2 = 1 - (1-r2)*(n-1)/(n-p-1) if n > p + 1 else None
 
     y_train_pred = final_model.predict(X_train_selected)
-    np.save(out_dir / 'y_train_pred.npy', y_train_pred)
+    np.save(out_dir/'y_train_pred.npy', y_train_pred)
     n_tr = len(y_train)
     p_tr = X_train_selected.shape[1]
     train_metrics = {
         'R2': r2_score(y_train, y_train_pred),
-        'Adjusted R2': 1 - (1 - r2_score(y_train, y_train_pred)) * (n_tr - 1) / (n_tr - p_tr - 1) if n_tr > p_tr + 1 else None,
+        'Adjusted R2': 1 - (1 - r2_score(y_train, y_train_pred)) * (n_tr - 1)/(n_tr - p_tr - 1) if n_tr > p_tr + 1 else None,
         'RMSE': np.sqrt(mean_squared_error(y_train, y_train_pred)),
         'MAE': mean_absolute_error(y_train, y_train_pred)
     }
@@ -284,7 +339,7 @@ def main(args):
     p_te = X_test_selected.shape[1]
     test_metrics = {
         'R2': r2_score(y_test, y_test_pred),
-        'Adjusted R2': 1 - (1 - r2_score(y_test, y_test_pred)) * (n_te - 1) / (n_te - p_te - 1) if n_te > p_te + 1 else None,
+        'Adjusted R2': 1 - (1 - r2_score(y_test, y_test_pred)) * (n_te - 1)/(n_te - p_te - 1) if n_te > p_te + 1 else None,
         'RMSE': np.sqrt(mean_squared_error(y_test, y_test_pred)),
         'MAE': mean_absolute_error(y_test, y_test_pred)
     }
@@ -301,16 +356,6 @@ def main(args):
     joblib.dump(preprocessor, out_dir / 'preprocessor.joblib')
     joblib.dump(selector, out_dir / 'rfecv_selector.joblib')
 
-    save_metrics(metrics, out_dir)
-    save_metrics_table(train_metrics, test_metrics, out_dir)
-    plot_true_vs_pred(y_train, y_train_pred, out_dir, 'Training', train_metrics)
-    plot_true_vs_pred(y_test, y_test_pred, out_dir, 'Testing', test_metrics)
-    plot_residuals(y_train, y_train_pred, out_dir, 'Training')
-    plot_residuals(y_test, y_test_pred, out_dir, 'Testing')
-    plot_feature_importances(selector.estimator_.feature_importances_, feature_names, out_dir)
-    plot_statewise_histogram(df, target_col, 'State_Name', out_dir)
-    plot_statewise_facets(df, target_col, 'State_Name', out_dir)
-
     knn_features = selector.estimator_.feature_importances_
     rf_support = selector.get_support()
     rf_preprocessor = preprocessor.get_feature_names_out()
@@ -319,21 +364,18 @@ def main(args):
     y_shuffled = np.random.permutation(y_train)
     test_selector = RFECV(estimator=rf, step=10, cv=cv, scoring='neg_mean_squared_error', n_jobs=-1, verbose=2)
     test_selector.fit(X_train_processed, y_shuffled)
-    final_model.fit(test_selector.transform(X_train_processed), y_shuffled)
-    y_train_pred = final_model.predict(test_selector.transform(X_train_processed))
+    shuffled_model = KNeighborsRegressor(n_neighbors=15, weights='distance', metric='manhattan')
+    shuffled_model.fit(test_selector.transform(X_train_processed), y_shuffled)
+    y_train_shuffled_pred = shuffled_model.predict(test_selector.transform(X_train_processed))
     print("\nKNN Regression Model Summary:")
-    print("Training score (r2) with random targets:", r2_score(y_shuffled, y_train_pred))
+    print("\nTraining score (r2) with random targets:", r2_score(y_shuffled, y_train_shuffled_pred))
     print(json.dumps(metrics, indent=2))
     print("\nKNN Feature Importance:")
     for name, importance in zip(feature_names, knn_features):
         print(f"{name}: {importance:.4f}")
 
     print("\nRF Feature Importance:\n", rf_features)
-
     print("\nPreprocessor features:\n", len(preprocessor.get_feature_names_out()))
-    #print("\nRF boolean support mask:\n:", selector.get_support())
-    #print("\nRF boolean support mask length:\n", len(selector.get_support()))
-    #print("\nX_train_processed shape:\n", X_train_processed.shape)
     print("\nknn_features:\n", knn_features)
     print("\nLength of knn_features:\n", len(knn_features))
     print("\nrf_features:\n", rf_features)
@@ -348,6 +390,29 @@ def main(args):
     test_residuals = y_test - y_test_pred
     print("\nTraining residuals:\n", train_residuals)
     print("\nTesting residuals:\n", test_residuals)
+    print("\nTrain Residuals min/max:\n", train_residuals.min(), train_residuals.max())
+    print("\nTest Residuals min/max:\n", test_residuals.min(), test_residuals.max())
+    print("\nTrain 0.1/99.9 percentiles:\n", np.percentile(train_residuals, 0.1), np.percentile(train_residuals, 99.9))
+    residuals = y_train - y_train_pred
+    print("Training residuals min: ", residuals.min())
+    print("Training residuals max: ", residuals.max())
+    print("Training residuals std: ", residuals.std())
+
+
+    save_metrics(metrics, out_dir)
+    save_metrics_table(train_metrics, test_metrics, out_dir)
+    plot_true_vs_pred(y_train, y_train_pred, out_dir, 'Training', train_metrics)
+    plot_true_vs_pred(y_test, y_test_pred, out_dir, 'Testing', test_metrics)
+    print("\nTraining: y_true shape\n", y_train.shape, "y_pred shape", y_train_pred.shape)
+    plot_residuals(y_train, y_train_pred, out_dir, 'Training')
+    print("\nTesting: y_true shape\n", y_test.shape, "y_pred shape", y_test_pred.shape)
+    plot_residuals(y_test, y_test_pred, out_dir, 'Testing')
+    plot_feature_importances(selector.estimator_.feature_importances_, feature_names, out_dir)
+    plot_statewise_histogram(df, target_col, 'State_Name', out_dir)
+    plot_statewise_facets(df, target_col, 'State_Name', out_dir)
+    plot_granularity(y_train, y_train_pred, out_dir, 'Training')
+    plot_granularity(y_test, y_test_pred, out_dir, 'Testing')
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Robust KNN regression with RFECV feature selection')

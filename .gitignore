@@ -17,6 +17,8 @@ __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
+*.npy
+*.joblib
 
 # SQLite journaling files
 *-journal
