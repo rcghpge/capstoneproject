@@ -36,6 +36,8 @@ from sklearn.preprocessing import OneHotEncoder, RobustScaler
 from sklearn.model_selection import train_test_split, KFold
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, explained_variance_score
 """
+The XGBoost model was not completed due to time constraints.
+
 Example Usage:
 python -m models.xgb_regression --data data/Key_indicator_districtwise.csv \
 --target YY_Infant_Mortality_Rate_Imr_Total_Person --id-cols State_Name State_District_Name \

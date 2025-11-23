@@ -24,6 +24,7 @@ import re
 import json
 import joblib
 import argparse
+import warnings
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -47,6 +48,7 @@ python -m models.knn_regression --data data/Key_indicator_districtwise.csv \
 --random-state 42 \
 --outdir knn
 """
+warnings.filterwarnings("ignore")
 
 def load_data(data_path):
     if data_path.endswith('.csv'):
@@ -109,50 +111,9 @@ def plot_residuals(y_true, y_pred, out_dir, split_name):
     plt.axhline(0, linestyle='--', color='r')
     plt.xlabel('Fitted Values')
     plt.ylabel('Residuals')
-    plt.title(r'{split_name} Residuals Plot (Zoomed)')
-    #plt.xlim(0, 100)
-    plt.ylim(-0.000000000000005, 0.000000000000005)
-    plt.savefig(Path(out_dir)/f'{split_name.lower()}_residuals_vs_fitted_zoomed_plot.png')
-    plt.close()
-
-    plt.figure()
-    plt.scatter(y_pred, residuals, alpha=0.6)
-    plt.axhline(0, linestyle='--', color='r')
-    plt.xlabel('Fitted Values')
-    plt.ylabel('Residuals')
-    plt.title(f'{split_name} Residuals Plot (Zoomed2)')
+    plt.title(f'{split_name} Residuals Plot (Zoomed)')
     plt.ylim(np.percentile(residuals, 0.1), np.percentile(residuals, 99.9))
-    plt.savefig(Path(out_dir)/f'{split_name.lower()}_residuals_vs_fitted_zoomed2_plot.png')
-    plt.close()
-
-    plt.figure()
-    plt.scatter(y_pred, residuals, alpha=0.6)
-    plt.axhline(0, linestyle='--', color='r')
-    plt.xlabel('Fitted Values')
-    plt.ylabel('Residuals')
-    plt.title(f'{split_name} Residuals Plot (Zoomed3)')
-    plt.ylim(residuals.min() - 0.01, residuals.max() + 0.01)
-    plt.savefig(Path(out_dir)/f'{split_name.lower()}_residuals_vs_fitted_zoomed3_plot.png')
-    plt.close()
-
-    plt.figure()
-    plt.scatter(y_pred, residuals, alpha=0.6)
-    plt.axhline(0, linestyle='--', color='r')
-    plt.xlabel('Fitted Values')
-    plt.ylabel('Residuals')
-    plt.title(f'{split_name} Residuals Plot (Full Range)')
-    plt.ylim(residuals.min(), residuals.max())
-    plt.savefig(Path(out_dir)/f'{split_name.lower()}_residuals_full_range_plot.png')
-    plt.close()
-
-    plt.figure()
-    plt.scatter(y_pred, residuals, alpha=0.6)
-    plt.axhline(0, linestyle='--', color='r')
-    plt.xlabel('Fitted Values')
-    plt.ylabel('Residuals')
-    plt.title(f'{split_name} Residuals Plot (Full Range)')
-    plt.ylim(residuals.min(), residuals.max())
-    plt.savefig(Path(out_dir)/f'{split_name.lower()}_residuals_full_range_plot.png')
+    plt.savefig(Path(out_dir)/f'{split_name.lower()}_residuals_vs_fitted_zoomed_plot.png')
     plt.close()
 
     plt.figure()
@@ -191,6 +152,17 @@ def plot_residuals(y_true, y_pred, out_dir, split_name):
     plt.savefig(Path(out_dir)/'predicted_vs_actual_plot.png')
     plt.close()
 
+def plot_jitter_histogram(data, out_dir, plot_name, bins=20, jitter_level=1e-3):
+    plt.figure()
+    plt.hist(data, bins=bins, alpha=0.5, color='blue')
+    jitter = np.random.normal(0, jitter_level, size=len(data))
+    plt.scatter(data, jitter, alpha=0.6, color='red')
+    plt.title(plot_name)
+    plt.xlabel("Residual")
+    plt.ylabel("Count")
+    plt.savefig(Path(out_dir)/f"{plot_name.lower().replace(' ', '_')}_histogram.png")
+    plt.close()
+
 def get_feature_names(preprocessor):
     num_features = preprocessor.named_transformers_['num'].named_steps['imputer'].feature_names_in_
     cat_pipeline = preprocessor.named_transformers_['cat']
@@ -201,7 +173,7 @@ def get_feature_names(preprocessor):
         cat_features.extend([f"{cat}_{c}" for c in cats])
     return list(num_features) + cat_features
 
-def plot_feature_importances(importances, feature_names, out_dir, top_n=10):
+def plot_feature_importance(importances, feature_names, out_dir, top_n=10):
     top_n = min(top_n, len(importances), len(feature_names))
     idx = np.argsort(importances)[-top_n:]
     top_importances = importances[idx]
@@ -213,7 +185,7 @@ def plot_feature_importances(importances, feature_names, out_dir, top_n=10):
     plt.xlabel("Feature Importances")
     plt.title(f"Top {top_n} KNN Model Features")
     plt.tight_layout()
-    plt.savefig(Path(out_dir)/'feature_importance_graph.png')
+    plt.savefig(Path(out_dir)/'feature_importance.png')
     plt.close()
 
 def plot_statewise_histogram(df, value_col, state_col, out_dir):
@@ -235,7 +207,7 @@ def plot_statewise_facets(df, value_col, state_col, out_dir):
     plt.savefig(Path(out_dir)/'statewise_facets_histogram.png')
     plt.close()
 
-def plot_granularity(y_true, y_pred, out_dir, split_name, jitter_level=1e-6):
+def plot_granularity_histogram(y_true, y_pred, out_dir, split_name, jitter_level=1e-6):
     residuals = y_true - y_pred
     if np.all(residuals == residuals.values[0]):
         residuals_jitter = residuals + np.random.normal(0, jitter_level, size=residuals.shape)
@@ -352,9 +324,9 @@ def main(args):
         'Selected Features Count': p
     }
 
-    joblib.dump(final_model, out_dir / 'knn_final_model.joblib')
-    joblib.dump(preprocessor, out_dir / 'preprocessor.joblib')
-    joblib.dump(selector, out_dir / 'rfecv_selector.joblib')
+    joblib.dump(final_model, out_dir/'knn_final_model.joblib')
+    joblib.dump(preprocessor, out_dir/'preprocessor.joblib')
+    joblib.dump(selector, out_dir/'rfecv_selector.joblib')
 
     knn_features = selector.estimator_.feature_importances_
     rf_support = selector.get_support()
@@ -407,11 +379,12 @@ def main(args):
     plot_residuals(y_train, y_train_pred, out_dir, 'Training')
     print("\nTesting: y_true shape\n", y_test.shape, "y_pred shape", y_test_pred.shape)
     plot_residuals(y_test, y_test_pred, out_dir, 'Testing')
-    plot_feature_importances(selector.estimator_.feature_importances_, feature_names, out_dir)
+    plot_feature_importance(selector.estimator_.feature_importances_, feature_names, out_dir)
     plot_statewise_histogram(df, target_col, 'State_Name', out_dir)
     plot_statewise_facets(df, target_col, 'State_Name', out_dir)
-    plot_granularity(y_train, y_train_pred, out_dir, 'Training')
-    plot_granularity(y_test, y_test_pred, out_dir, 'Testing')
+    plot_granularity_histogram(y_train, y_train_pred, out_dir, 'Training')
+    plot_granularity_histogram(y_test, y_test_pred, out_dir, 'Testing')
+    plot_jitter_histogram(y_train_pred, out_dir, 'Training Residuals Distribution', bins=20, jitter_level=1e-3)
 
 
 if __name__ == '__main__':
