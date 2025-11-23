@@ -154,9 +154,9 @@ def plot_residuals(y_true, y_pred, out_dir, split_name):
 
 def plot_jitter_histogram(data, out_dir, plot_name, bins=20, jitter_level=1e-3):
     plt.figure()
-    plt.hist(data, bins=bins, alpha=0.5, color='blue')
+    plt.hist(data, bins=bins, alpha=0.8, color='steelblue')
     jitter = np.random.normal(0, jitter_level, size=len(data))
-    plt.scatter(data, jitter, alpha=0.6, color='red')
+    plt.scatter(data, jitter, alpha=0.8, color='coral')
     plt.title(plot_name)
     plt.xlabel("Residual")
     plt.ylabel("Count")
@@ -384,7 +384,7 @@ def main(args):
     plot_statewise_facets(df, target_col, 'State_Name', out_dir)
     plot_granularity_histogram(y_train, y_train_pred, out_dir, 'Training')
     plot_granularity_histogram(y_test, y_test_pred, out_dir, 'Testing')
-    plot_jitter_histogram(y_train_pred, out_dir, 'Training Residuals Distribution', bins=20, jitter_level=1e-3)
+    plot_jitter_histogram(y_train_pred, out_dir, 'Training Residuals Distribution', bins=10, jitter_level=1e-6)
 
 
 if __name__ == '__main__':

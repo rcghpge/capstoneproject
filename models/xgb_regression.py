@@ -53,7 +53,7 @@ def plot_and_save(y_true, y_pred, outdir):
     plt.xlabel('Actual')
     plt.ylabel('Predicted')
     plt.title('Predicted vs Actual')
-    plt.savefig(Path(outdir) / 'predicted_vs_actual.png')
+    plt.savefig(Path(outdir)/'predicted_vs_actual.png')
     plt.close()
 
     residuals = y_true - y_pred
@@ -63,7 +63,7 @@ def plot_and_save(y_true, y_pred, outdir):
     plt.xlabel('Fitted Values')
     plt.ylabel('Residuals')
     plt.title('Residuals vs Fitted')
-    plt.savefig(Path(outdir) / 'residuals_vs_fitted.png')
+    plt.savefig(Path(outdir)/'residuals_vs_fitted.png')
     plt.close()
 
     plt.figure()
@@ -71,7 +71,7 @@ def plot_and_save(y_true, y_pred, outdir):
     plt.xlabel('Residual')
     plt.ylabel('Frequency')
     plt.title('Residual Histogram')
-    plt.savefig(Path(outdir) / 'residual_histogram.png')
+    plt.savefig(Path(outdir)/'residual_histogram.png')
     plt.close()
 
 def plot_true_vs_pred(y_true, y_pred, outdir, subset_label, metrics):
@@ -93,7 +93,7 @@ def plot_true_vs_pred(y_true, y_pred, outdir, subset_label, metrics):
                    fontsize=10, verticalalignment='bottom', horizontalalignment='right',
                    bbox=dict(boxstyle='round,pad=0.5', facecolor='lightgray', alpha=0.5))
     plt.tight_layout()
-    plt.savefig(Path(outdir) / f'baseline_{subset_label.lower()}_scatter.png')
+    plt.savefig(Path(outdir)/f'baseline_{subset_label.lower()}_scatter.png')
     plt.close()
 
 def plot_feature_importances(importances, feature_names, outdir, top_n=10):
@@ -108,14 +108,14 @@ def plot_feature_importances(importances, feature_names, outdir, top_n=10):
     plt.xlabel("Feature Importances")
     plt.title(f"Top {top_n} Model Features")
     plt.tight_layout()
-    plt.savefig(Path(outdir) / 'feature_importances.png')
+    plt.savefig(Path(outdir)/'feature_importances.png')
     plt.close()
 
 def plot_statewise_histogram(df, value_col, state_col, outdir):
     sns.histplot(data=df, x=value_col, hue=state_col, element="step", stat="count", common_norm=False, palette='bright', alpha=0.4)
     plt.title('Value Distribution State-Wise')
     plt.tight_layout()
-    plt.savefig(Path(outdir) / 'statewise_histogram.png')
+    plt.savefig(Path(outdir)/'statewise_histogram.png')
     plt.close()
 
 def plot_statewise_facets(df, value_col, state_col, outdir):
@@ -125,7 +125,7 @@ def plot_statewise_facets(df, value_col, state_col, outdir):
     g.set_axis_labels("Value", "Count")
     plt.subplots_adjust(top=0.9)
     g.fig.suptitle('Value Distribution State-Wise')
-    plt.savefig(Path(outdir) / 'statewise_facets.png')
+    plt.savefig(Path(outdir)/'statewise_facets.png')
     plt.close()
 
 def parse_args():
@@ -250,22 +250,22 @@ def main():
         "adj_r2": adj_r2,
     }
 
-    np.save(outdir / "X_train_selected.npy", X_train_selected)
-    np.save(outdir / "X_test_selected.npy", X_test_selected)
-    np.save(outdir / "y_train.npy", y_train.to_numpy())
-    np.save(outdir / "y_test.npy", y_test.to_numpy())
-    np.save(outdir / "y_pred.npy", y_pred)
+    np.save(outdir/"X_train_selected.npy", X_train_selected)
+    np.save(outdir/"X_test_selected.npy", X_test_selected)
+    np.save(outdir/"y_train.npy", y_train.to_numpy())
+    np.save(outdir/"y_test.npy", y_test.to_numpy())
+    np.save(outdir/"y_pred.npy", y_pred)
 
-    with open(outdir / "regression_metrics.json", "w") as f:
+    with open(outdir/"regression_metrics.json", "w") as f:
         json.dump(metrics, f, indent=2)
 
-    with open(outdir / "regression_metrics.txt", "w") as f:
+    with open(outdir/"regression_metrics.txt", "w") as f:
         f.write("Regression Metrics Summary\n")
         f.write("==========================\n")
         for key, value in metrics.items():
             f.write(f"{key}: {value:.6f}\n")
 
-    with open(outdir / "regression_report.txt", "w") as f:
+    with open(outdir/"regression_report.txt", "w") as f:
         f.write("Model Metrics:\n")
         for key, value in metrics.items():
             f.write(f"{key}: {value:.6f}\n")
