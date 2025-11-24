@@ -12,7 +12,7 @@ authors:
     family-names: Nguyen
     affiliation: The University of Texas at Arlington
     email: alex.nguyen2@mavs.uta.edu
-  - given-names: 'Landon '
+  - given-names: Landon
     family-names: Nguyen
     email: lmn4121@mavs.uta.edu
     affiliation: The University of Texas at Arlington
@@ -31,6 +31,8 @@ keywords:
   - infant mortality rate
   - mortality rate
   - scikit-learn
+  - knn
+  - xgboost
   - uta
   - ut arlington
 license: MIT
