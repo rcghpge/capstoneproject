@@ -1,0 +1,38 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Capstone Project 1
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Alex
+    family-names: Nguyen
+    affiliation: The University of Texas at Arlington
+    email: alex.nguyen2@mavs.uta.edu
+  - given-names: 'Landon '
+    family-names: Nguyen
+    email: lmn4121@mavs.uta.edu
+    affiliation: The University of Texas at Arlington
+  - given-names: Robert
+    family-names: Cocker
+    email: robert.cocker@mavs.uta.edu
+    affiliation: The University of Texas at Arlington
+repository-code: 'https://github.com/rcghpge.com/capstoneproject'
+url: 'https://uta.edu'
+abstract: >-
+  Machine Learning repository for Infant Mortality Rate
+  prediction.
+keywords:
+  - machine learning
+  - data science
+  - infant mortality rate
+  - mortality rate
+  - scikit-learn
+  - uta
+  - ut arlington
+license: MIT
+version: 0.1.0
+date-released: '2025-12-10'
