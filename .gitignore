@@ -49,6 +49,7 @@ ENV/
 *.bak
 *.patch
 *.joblib
+docs/
 out/
 prototype/
 test/

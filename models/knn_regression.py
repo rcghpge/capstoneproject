@@ -80,8 +80,8 @@ def build_preprocessor(X):
 
 def plot_true_vs_pred(y_true, y_pred, out_dir, subset_label, metrics):
     plt.figure(figsize=(8,5))
-    plt.scatter(range(len(y_true)), y_true, color='black', label='True Value', s=20)
-    plt.plot(range(len(y_pred)), y_pred, color='blue', label='Predicted Value')
+    plt.scatter(range(len(y_true)), y_true, color='steelblue', label='True Value', s=20)
+    plt.plot(range(len(y_pred)), y_pred, color='coral', label='Predicted Value')
     plt.xlabel('District')
     plt.ylabel('Infant Mortality Rate')
     plt.title(f'{subset_label} Scatter Plot')
