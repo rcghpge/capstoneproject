@@ -28,10 +28,10 @@ __pycache__/
 *.sqlite-shm
 *.sqlite-wal
 
-# Jupyter Notebook configs
+# Jupyter Notebook
 .ipynb_checkpoints/
 
-# JupyterLab workspace configs
+# JupyterLab workspace 
 *.jupyterlab-workspace
 .jupyter/lab/workspaces/
 .ipynb_checkpoints/
@@ -45,12 +45,14 @@ venv/
 env/
 ENV/
 
-# Local builds
+# Local development
 *.bak
 *.patch
 *.joblib
+*.yml~
 docs/
 out/
 prototype/
 test/
 tools/
+

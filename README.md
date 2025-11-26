@@ -1,18 +1,45 @@
 # capstoneproject
 
-Senior Capstone Project | Division of Data Science | The University of Texas at Arlington
+Capstone Project 1 | Division of Data Science | The University of Texas at Arlington
 
-Health Analytics - Infant Mortality Rates: https://www.kaggle.com/datasets/rajanand/key-indicators-of-annual-health-survey 
+Machine learning utilizing key health indicators to assess infant mortality
+
+References:
+Kaggle
+Health Analytics - India. Annual Health Survey (AHS): [link](https://www.kaggle.com/datasets/rajanand/key-indicators-of-annual-health-survey) 
 
 ---
 
-## Capstone Development in Python + SQL
-Create a virtual environment for capstone development with Python and SQL. Either or works in
-Jupyter Notebooks or Jupyter Lab
+# Capstone Project 1 Structure
+```bash
+.
+├── CITATION.cff
+├── LICENSE
+├── README.md
+├── __init__.py
+├── bandit.yml
+├── bandit.yml~
+├── data
+├── docs
+├── mice_imputer2.patch
+├── models
+├── notebooks
+├── out
+├── prototype
+├── submissions
+├── test
+├── tools
+└── venv
 
-### Software Dependencies
-Install Python or SQL dependencies needed for capstone project dev inside of the Python virtual
-environment if needed before capstone project development on the Jupyter platform.
+11 directories, 7 files
+```
+
+---
+
+## Getting Started
+Clone the GitHub repository and generate a Python virtual environment. Install require software dependencies.
+For Jupyter Notebook, Jupyter Lab, and Bash command-line interpreter environments.
+
 ```bash
 # Clone repository
 git clone https://github.com/rcghpge/capstoneproject.git
@@ -25,13 +52,16 @@ python -m venv venv
 source venv/bin/activate
 
 # Install dependencies and Jupyter Notebooks or Jupyter Lab
-pip install jupyterlab jupyter notebook # add dependencies as needed - pandas numpy matplotlib etc
+pip install jupyterlab jupyter notebook # add required dependencies as needed - pandas numpy matplotlib etc.
 
-# Install SQL dependencies (Optional)
-pip install ipython-sql sqlalchemy sqlite3
+# Launch Jupyter Notebook or Jupyter Lab
+jupyter lab
 
-# Launch Jupyter Notebook/Jupyter Lab
-jupyter lab # or jupyter notebook
+# CLI
+Secure Python code scanning with Bandit and pip-audit
+bandit -r . -c bandit.yml --severity-level high --confidence-level high
+
+pip-audit
 ```
 
 ---
