@@ -38,7 +38,7 @@
 ├── __init__.py
 └── bandit.yml
 
-3 directories, 7 files
+4 directories, 7 files
 ```
 
 ---
