@@ -67,7 +67,6 @@ jupyter lab
 # Bash Command-line - CLI
 # Secure Python code scanning with Bandit and pip-audit
 bandit -r . -c bandit.yml --severity-level high --confidence-level high
-
 pip-audit
 ```
 
