@@ -6,7 +6,7 @@
 <table align="center" width="100%">
   <tr>
     <td align="center" style="padding: 10px;">
-      <img src="assets/uta.png" alt="UTA Logo"
+      <img src="assets/UTA Celebrating 130 Years logo white circle.png" alt="UTA Logo"
            style="width: 160px; height: auto;" />
   </tr>
 </table>
