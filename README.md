@@ -7,11 +7,9 @@
   <tr>
     <td align="center" style="padding: 10px;">
       <img src="assets/UTA Celebrating 130 Years logo white circle.png" alt="UTA Logo"
-           style="width: 160px; height: auto;" />
+           style="width: 320px; height: auto;" />
   </tr>
 </table>
-
-<p>&nbsp;</p>
 
 <p>
   Machine learning utilizing key health indicators for infant mortality rate prediction.
