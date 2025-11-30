@@ -3,6 +3,13 @@
 <p align="center">
   <strong>Capstone Project 1 | Division of Data Science | The University of Texas at Arlington</strong>
 </p>
+<table align="center" width="100%">
+  <tr>
+    <td align="center" style="padding: 10px;">
+      <img src="assets/uta.png" alt="UTA Logo"
+           style="width: 160px; height: auto;" />
+  </tr>
+</table>
 
 <p>&nbsp;</p>
 
