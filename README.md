@@ -4,7 +4,8 @@
   <strong>Capstone Project 1 | Division of Data Science | The University of Texas at Arlington</strong>
 <br>
 <p align="left">
-  Machine learning utilizing key health indicators for infant mortality rate prediction.<br>
+  Machine learning utilizing key health indicators for infant mortality rate prediction.
+  <br>
   <strong>References -</strong> Kaggle. Health Analytics. India. Annual Health Survey (AHS): https://www.kaggle.com/datasets/rajanand/key-indicators-of-annual-health-survey
 </p>
 
