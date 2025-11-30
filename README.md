@@ -5,13 +5,22 @@
 </p>
 
 <br>
-Machine learning utilizing key health indicators to assess infant mortality
+
+<p align="center">
+  Machine learning utilizing key health indicators to assess infant mortality
+</p>
 
 <br>
 
-**References:**
-Kaggle.
-Health Analytics - India. Annual Health Survey (AHS): [link](https://www.kaggle.com/datasets/rajanand/key-indicators-of-annual-health-survey) 
+<p align="center">
+  <strong>Capstone GitHub Repository</strong>
+</p>
+
+<br>
+
+**References:**  
+Kaggle.  
+Health Analytics - India. Annual Health Survey (AHS): [link](https://www.kaggle.com/datasets/rajanand/key-indicators-of-annual-health-survey)
 
 ---
 
@@ -36,7 +45,7 @@ Health Analytics - India. Annual Health Survey (AHS): [link](https://www.kaggle.
 
 ## Getting Started
 Clone the GitHub repository and generate a Python virtual environment. Install required software dependencies.
-For Jupyter Notebook, Jupyter Lab, and Bash command-line interpreter environments.
+Runs in Jupyter Notebook, Jupyter Lab, and Bash command-line interpreter environments.
 
 ```bash
 # Clone repository
@@ -55,8 +64,8 @@ pip install jupyterlab jupyter notebook # add required dependencies as needed - 
 # Launch Jupyter Notebooks or Jupyter Lab
 jupyter lab
 
-# Command-line - CLI
-Secure Python code scanning with Bandit and pip-audit
+# Bash Command-line - CLI
+# Secure Python code scanning with Bandit and pip-audit
 bandit -r . -c bandit.yml --severity-level high --confidence-level high
 
 pip-audit

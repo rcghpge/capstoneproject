@@ -47,9 +47,11 @@ ENV/
 
 # Local development
 *.bak
+*.log
 *.patch
 *.joblib
 *.yml~
+*.py~
 docs/
 out/
 prototype/
