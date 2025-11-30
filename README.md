@@ -26,6 +26,7 @@
 # Capstone Project 1 Structure
 ```bash
 .
+├── assets
 ├── models
 ├── notebooks
 ├── submissions
@@ -44,7 +45,7 @@
 
 ## Getting Started
 Clone the GitHub repository and generate a Python virtual environment. Install required software dependencies.
-Runs in Jupyter Notebook, Jupyter Lab, and Bash command-line interpreter environments.
+Runs in Jupyter Notebook, Jupyter Lab, and Bash command-line environments.
 
 ```bash
 # Clone repository
