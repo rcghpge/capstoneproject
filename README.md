@@ -5,7 +5,7 @@
 <br>
 <p align="left">
   Machine learning utilizing key health indicators for infant mortality rate prediction.
-  <br>
+<br>
   <strong>References -</strong> Kaggle. Health Analytics. India. Annual Health Survey (AHS): https://www.kaggle.com/datasets/rajanand/key-indicators-of-annual-health-survey
 </p>
 
