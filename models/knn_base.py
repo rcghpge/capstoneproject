@@ -379,7 +379,7 @@ def main(args):
     joblib.dump(preprocessor, outdir/'preprocessor.joblib')
     joblib.dump(selector, outdir/'rfecv_selector.joblib')
     
-    print("\n🎨 Generating KNN model inference plots...")
+    print("\n📈 Generating KNN model inference plots...")
     print("-" * 50)
 
     raw_feature_names = get_raw_feature_names(preprocessor, X_train.columns.tolist())
