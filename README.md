@@ -7,7 +7,7 @@
   <tr>
     <td align="center" style="padding: 10px;">
       <img src="assets/UTA Celebrating 130 Years logo white circle.png" alt="UTA Logo"
-           style="width: 320px; height: auto;" />
+           style="width: auto; height: auto;" />
   </tr>
 </table>
 
