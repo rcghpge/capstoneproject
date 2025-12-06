@@ -16,10 +16,12 @@
 </p>
 
 <p>
-  <strong>References -</strong> Kaggle. Health Analytics. India. Annual Health Survey (AHS): 
-  https://www.kaggle.com/datasets/rajanand/key-indicators-of-annual-health-survey
+  <strong>References</strong> 
+  <br>
+  Health Analytics. India. Annual Health Survey (AHS)
+  <br>
+  <strong>Kaggle:</strong> https://www.kaggle.com/datasets/rajanand/key-indicators-of-annual-health-survey
 </p>
-
 
 ---
 
@@ -36,9 +38,10 @@
 ├── LICENSE
 ├── README.md
 ├── __init__.py
-└── bandit.yml
+├── requirements.txt
+└── pyproject.yml
 
-4 directories, 7 files
+4 directories, 8 files
 ```
 
 ---
@@ -52,22 +55,28 @@ Runs in Jupyter Notebook, Jupyter Lab, and Bash command-line environments.
 git clone https://github.com/rcghpge/capstoneproject.git
 cd capstoneproject
 
-# Generate pip venv if needed
+# Generate pip venv 
 python -m venv venv
 
 # Activate venv
 source venv/bin/activate
 
-# Install dependencies and Jupyter Notebooks or Jupyter Lab
-pip install jupyterlab jupyter notebook # add required dependencies as needed - pandas numpy matplotlib etc.
+# Install dependencies 
+pip install -e .[dev]
 
-# Launch Jupyter Notebooks or Jupyter Lab
-jupyter lab
+# Environment Checks
+python -c "from models import *; print('✅ Model import dependencies OK')"
+bandit -r models/
+bandit -r models/ -f json -o security-report.jon # secure report summary
+pip-audit -r requirements.txt
+pip check
+pytest --cov=models/ --cov-report=term-missing
 
-# Bash Command-line - CLI
-# Secure Python code scanning with Bandit and pip-audit
-bandit -r . -c bandit.yml --severity-level high --confidence-level high
-pip-audit
+# Run Python models and Launch Jupyter for EDA 
+jupyter lab notebooks/ # run in a web browser environment
+jupyter lab notebooks/ --no-browser # intiliaze Jupyter server with no web browser
+jupyter lab/models/
+jupyter lab/models/ --no-browser
 ```
 
 ---

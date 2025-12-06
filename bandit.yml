@@ -1,2 +1,0 @@
-# Bandit environment scan
-exclude_dirs: ['venv']
