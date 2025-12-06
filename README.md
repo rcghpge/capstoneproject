@@ -1,5 +1,3 @@
-# capstoneproject
-
 <div align="center">
 
 <h1 style="font-size: clamp(28px, 5vw, 48px); font-weight: 700; color: #1f6feb; margin: 0 0 10px 0; letter-spacing: -0.02em;">
@@ -22,6 +20,12 @@
 
 <p style="font-size: clamp(16px, 3.5vw, 20px); line-height: 1.6; color: #24292f; max-width: 800px; margin: 0 auto 20px auto;">
   Machine learning utilizing key health indicators for <strong>infant mortality rate prediction</strong>.
+</p>
+
+<p style="font-size: 16px; line-height: 1.6; color: #24292f; max-width: 800px; margin: 0 auto 40px auto;">
+  <strong>References</strong><br>
+  Health Analytics. India. Annual Health Survey (AHS)<br>
+  <strong>Kaggle:</strong> <a href="https://www.kaggle.com/datasets/rajanand/key-indicators-of-annual-health-survey">https://www.kaggle.com/datasets/rajanand/key-indicators-of-annual-health-survey</a>
 </p>
 
 </div>
